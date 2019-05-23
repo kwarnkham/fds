@@ -1,38 +1,32 @@
 <template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-toolbar>
-
+  <v-app :dark="dark">
+    <NavComponent/>
     <v-content>
-      <HelloWorld/>
+      <v-container fluid>
+        <router-view/>
+      </v-container>
     </v-content>
+    <v-footer :inset="true" app>
+      <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
+import NavComponent from "./components/NavComponent";
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    NavComponent
   },
-  data () {
-    return {
-      //
+  data: () => ({
+    dark: true,
+    drawerToggler: false,
+    primaryDrawer: {
+      model: null,
+      type: "default (no property)",
+      clipped: false,
+      mini: false
     }
-  }
-}
+  })
+};
 </script>
