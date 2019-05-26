@@ -13,13 +13,14 @@
 </template>
 
 <script>
+// import axios from "axios";
 import NavComponent from "./components/NavComponent";
 export default {
   components: {
     NavComponent
   },
   data: () => ({
-    dark: true,
+    dark: false,
     drawerToggler: false,
     primaryDrawer: {
       model: null,
@@ -27,6 +28,20 @@ export default {
       clipped: false,
       mini: false
     }
-  })
+  }),
+  mounted() {
+  //   axios({
+  //     method: "post",
+  //     url: `${this.$store.state.apiBaseUrl}/user/create`,
+  //     data: {
+  //       name: "Moon",
+  //       mobile: "095088369",
+  //       password: "ninjasaga",
+  //       password_confirmation: "ninjasaga"
+  //     }
+  //   })
+  //     .then(res => console.log(res))
+  //     .catch(err => console.log(err.response));
+  }
 };
 </script>

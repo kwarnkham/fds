@@ -1,15 +1,17 @@
 <template>
-  <div>Home</div>
+  <div>
+    <Register/>
+  </div>
 </template>
 
 <script>
-  // import HelloWorld from '../components/HelloWorld'
+  import Register from '../components/Register'
   // import NavComponent from '../components/NavComponent'
 
   export default {
     name:'Home',
     components: {
-      // HelloWorld,
+      Register,
       // NavComponent
     }
   }
