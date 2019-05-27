@@ -1,8 +1,8 @@
 <template>
-  <v-app :dark="dark">
+  <v-app>
     <NavComponent/>
     <v-content>
-      <v-container fluid>
+      <v-container fluid fill-height>
         <router-view/>
       </v-container>
     </v-content>
@@ -19,29 +19,20 @@ export default {
   components: {
     NavComponent
   },
-  data: () => ({
-    dark: false,
-    drawerToggler: false,
-    primaryDrawer: {
-      model: null,
-      type: "default (no property)",
-      clipped: false,
-      mini: false
-    }
-  }),
   mounted() {
-  //   axios({
-  //     method: "post",
-  //     url: `${this.$store.state.apiBaseUrl}/user/create`,
-  //     data: {
-  //       name: "Moon",
-  //       mobile: "095088369",
-  //       password: "ninjasaga",
-  //       password_confirmation: "ninjasaga"
-  //     }
-  //   })
-  //     .then(res => console.log(res))
-  //     .catch(err => console.log(err.response));
+    //   axios({
+    //     method: "post",
+    //     url: `${this.$store.state.apiBaseUrl}/user/create`,
+    //     data: {
+    //       name: "Moon",
+    //       mobile: "095088369",
+    //       password: "ninjasaga",
+    //       password_confirmation: "ninjasaga"
+    //     }
+    //   })
+    //     .then(res => console.log(res))
+    //     .catch(err => console.log(err.response));
   }
 };
 </script>
+

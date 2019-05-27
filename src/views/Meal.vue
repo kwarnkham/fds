@@ -8,20 +8,32 @@
           <template v-slot:title>
             <span>{{meal.name}}</span>
           </template>
-          <v-btn flat color="orange">Order</v-btn>
+          <v-btn flat color="orange" @click.native="$refs.loginDialog.toggleDialog(true)">Order</v-btn>
           <v-btn flat color="orange">Detail</v-btn>
         </MealComponent>
       </v-flex>
+      <FullScreenDialog ref='loginDialog'>
+        <Login @openRegisterDialog="openRegisterDialog"/>
+      </FullScreenDialog>
+      <FullScreenDialog ref='registerDialog'>
+        <Register/>
+      </FullScreenDialog>
     </v-layout>
 </template>
 
 <script>
 import MealComponent from "../components/MealComponent";
+import FullScreenDialog from '../components/FullScreenDialog'
+import Register from '../components/Register'
+import Login from '../components/Login'
 
 export default {
   name: "Meal",
   components: {
-    MealComponent
+    MealComponent,
+    FullScreenDialog,
+    Register,
+    Login
   },
   data: () => ({
     meals: [
@@ -34,6 +46,12 @@ export default {
       { picture: require("@/assets/food7.jpg"), name: "food7" },
       { picture: require("@/assets/food8.jpg"), name: "food8" },
     ]
-  })
+  }),
+  methods:{
+    openRegisterDialog(){
+      // this.$refs.loginDialog.toggleDialog(false)
+      this.$refs.registerDialog.toggleDialog(true)
+    }
+  }
 };
 </script>
