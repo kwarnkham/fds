@@ -35,7 +35,11 @@
                 @click.prevent="confirmLogout"
                 :class="{activeColor:$route.path == item.to}"
               >{{ item.title }}</a>
-              <PromptDialog ref="promptDialog" @Agreed="logout" v-if="item.title == 'Logout'">Do you really want to log out?</PromptDialog>
+              <PromptDialog
+                ref="promptDialog"
+                @Agreed="logout"
+                v-if="item.title == 'Logout'"
+              >Do you really want to log out?</PromptDialog>
               <router-link
                 v-if="item.title != 'Logout'"
                 :to="item.to"
@@ -44,7 +48,6 @@
               >{{ item.title }}</router-link>
             </v-list-tile-title>
           </v-list-tile-content>
-          
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
@@ -71,28 +74,27 @@ export default {
   }),
   mounted() {
     // eslint-disable-next-line
-    this.$on("input", () => (this.drawerToggler = !drawerToggler));
+    // this.$on("input", () => (this.drawerToggler = !drawerToggler));
   },
   computed: {
     isLogin() {
       if (this.$store.state.token == null) {
         return false;
-      }
-      else {
+      } else {
         return true;
       }
     }
   },
   watch: {
-    isLogin(state) {
-      if (state) {
+    isLogin(status) {
+      if (status) {
         this.items[this.items.length - 1] = {
           title: "Logout",
           icon: "exit_to_app",
           to: "/logout"
         };
       }
-      if (!state) {
+      if (!status) {
         this.items[this.items.length - 1] = {
           title: "Login",
           icon: "person_outline",
@@ -109,6 +111,7 @@ export default {
       this.$refs.promptDialog[0].toggleDialog(true);
     },
     logout() {
+      this.drawerToggler = !this.drawerToggler;
       this.$refs.promptDialog[0].toggleDialog(false);
       this.$router.push("/logout");
     }

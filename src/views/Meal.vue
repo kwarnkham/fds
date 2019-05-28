@@ -23,12 +23,8 @@
         <v-btn depressed color="info">Detail</v-btn>
       </MealComponent>
     </v-flex>
-
     <FullScreenDialog ref="loginDialog">
-      <LoginComponent @openRegisterDialog="openRegisterDialog"/>
-    </FullScreenDialog>
-    <FullScreenDialog ref="registerDialog">
-      <Register/>
+      <LoginComponent v-if="$store.state.token == null"/>
     </FullScreenDialog>
   </v-layout>
 </template>
@@ -36,7 +32,6 @@
 <script>
 import MealComponent from "../components/MealComponent";
 import FullScreenDialog from "../components/FullScreenDialog";
-import Register from "../components/Register";
 import LoginComponent from "../components/LoginComponent";
 
 export default {
@@ -44,7 +39,6 @@ export default {
   components: {
     MealComponent,
     FullScreenDialog,
-    Register,
     LoginComponent
   },
   data: () => ({
@@ -59,11 +53,20 @@ export default {
       { picture: require("@/assets/food8.jpg"), name: "food8" }
     ]
   }),
+  computed:{
+    isLogin(){
+      return this.$store.state.token == null ? false: true
+    }
+  },
+  watch:{
+    isLogin(status){
+      if(status){
+        this.$refs.loginDialog.toggleDialog(false)
+        
+      }
+    }
+  },
   methods: {
-    openRegisterDialog() {
-      // this.$refs.loginDialog.toggleDialog(false)
-      this.$refs.registerDialog.toggleDialog(true);
-    },
     order(){
       alert('ordering')
     }

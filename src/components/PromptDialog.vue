@@ -19,8 +19,8 @@ export default {
     };
   },
   methods:{
-    toggleDialog(state){
-      this.dialog= state
+    toggleDialog(status){
+      this.dialog= status
     }
   }
 };

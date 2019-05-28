@@ -1,7 +1,7 @@
 <template>
   <v-layout align-center justify-center row fill-height>
     <v-flex xs-12>
-      <LoginComponent/>
+      <LoginComponent v-if="$store.state.token == null"/>
       <!-- <Register/> -->
       <!-- <SnackBar/> -->
     </v-flex>

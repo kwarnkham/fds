@@ -37,13 +37,25 @@
         </v-form>
       </v-card>
     </v-flex>
+    <FullScreenDialog ref="registerDialog">
+      <Register/>
+    </FullScreenDialog>
+    <SnackBar ref="snackBar" @snackBarClosed='message=""'>{{message}}</SnackBar>
   </v-layout>
 </template>
 
 <script>
 import axios from "axios";
+import Register from "./Register";
+import FullScreenDialog from "./FullScreenDialog";
+import SnackBar from "./SnackBar";
 export default {
   name: "LoginComponent",
+  components: {
+    Register,
+    FullScreenDialog,
+    SnackBar
+  },
   data: () => ({
     valid: true,
     mobile: "",
@@ -55,7 +67,8 @@ export default {
     ],
     password: "",
     passwordRules: [v => !!v || "Password is required"],
-    showPassword: false
+    showPassword: false,
+    message: ""
   }),
   computed: {},
   methods: {
@@ -66,17 +79,30 @@ export default {
           url: `${this.$store.state.apiBaseUrl}/api_token/create`,
           data: {
             mobile: this.mobile,
-            password: this.password,
+            password: this.password
           }
-        }).then(res=>{
-          console.log(res)
-        });
-        // this.reset();
+        })
+          .then(res => {
+            console.log(res);
+            this.message= res.data.message;
+            this.$refs.snackBar.toggleSnackBar(true, "success");
+            this.$store.dispatch("setToken", res.data.token);
+          })
+          .catch(err => {
+            console.log(err.response);
+            for (let key in err.response.data.errors) {
+              this.message += ` ${err.response.data.errors[key]}`;
+              this.$refs.snackBar.toggleSnackBar(true, "error");
+            }
+          });
       }
-    },
-    reset() {
-      this.$refs.form.reset();
     }
+  },
+  mounted() {
+    this.$on("openRegisterDialog", () => {
+      this.$refs.registerDialog.toggleDialog(true);
+    });
+    // this.login();
   }
 };
 </script>

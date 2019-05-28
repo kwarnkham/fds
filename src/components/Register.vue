@@ -64,7 +64,7 @@
         </v-form>
       </v-card>
     </v-flex>
-    <SnackBar ref="snackBar">{{message}}</SnackBar>
+    <SnackBar ref="snackBar" @snackBarClosed='message=""'>{{message}}</SnackBar>
   </v-layout>
 </template>
 
@@ -77,6 +77,7 @@ export default {
     SnackBar
   },
   data: () => ({
+    // errors: new Errors(),
     valid: true,
     name: "",
     nameRules: [
@@ -100,7 +101,7 @@ export default {
     passwordConfirmation: "",
     showPassword: false,
     showPasswordConfirmation: false,
-    message: "",
+    message: ""
   }),
   computed: {
     passwordConfirmationRules() {
@@ -124,26 +125,26 @@ export default {
           }
         })
           .then(res => {
-            console.log(res);
-            if(res.status == '200'){
-              this.message = 'Registraion is successful'
-              this.$refs.snackBar.toggleSnackBar(true, 'success')
-              this.reset();
-              this.$store.dispatch('setToken', res.data.result.api_token)
+            // console.log(res);
+            if (res.status == "200") {
+              this.message = "Registraion is successful";
+              this.$refs.snackBar.toggleSnackBar(true, "success");
+              // this.$refs.form.reset();
+              this.$store.dispatch("setToken", res.data.token);
             }
           })
           .catch(err => {
-            console.log(err);
-            if(err.response.status == '422'){
-              this.message = err.response.data.errors.mobile[0]
-              this.$refs.snackBar.toggleSnackBar(true, 'error')
+            console.log(err)
+            for (let key in err.response.data.errors) {
+              this.message += ` ${err.response.data.errors[key]}`;
             }
+            this.$refs.snackBar.toggleSnackBar(true, "error");
           });
       }
-    },
-    reset() {
-      this.$refs.form.reset();
     }
+  },
+  created() {
+
   }
 };
 </script>
