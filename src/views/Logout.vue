@@ -4,7 +4,6 @@
       <!-- <Login/>
       <Register/> -->
       <!-- <SnackBar/> -->
-      <PromptDialog/>
       <p v-show="$store.state.token != null">You are logged in</p>
       <p v-show="$store.state.token == null">You are not logged in</p>
     </v-flex>
@@ -15,15 +14,18 @@
 // import Register from "../components/Register";
 // import Login from "../components/Login";
 // import SnackBar from '../components/SnackBar'
-import PromptDialog from '../components/PromptDialog'
 
 export default {
   name: "Home",
   components: {
     // Register,
     // Login,
-    // SnackBar,
-    PromptDialog
+    // SnackBar
+  },
+  mounted(){
+    localStorage.removeItem('token');
+    this.$store.dispatch('removeToken');
+    this.$router.push('/')
   }
 };
 </script>

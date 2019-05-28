@@ -10,20 +10,20 @@ export default new Vuex.Store({
     token: null
   },
   mutations: {
-    // toggleIsLogin: (state, payload) => {
-    //   state.isLogin = payload
-    // },
     setToken: (state, payload) => {
       state.token = payload
       localStorage.setItem('token', payload)
+    },
+    removeToken: (state)=>{
+      state.token = null
     }
   },
   actions: {
-    // toggleIsLogin: (context, payload) => {
-    //   context.commit('toggleIsLogin', payload)
-    // },
     setToken: (context, payload) => {
       context.commit('setToken', payload)
     },
+    removeToken:(context) => {
+      context.commit('removeToken')
+    }
   }
 })
