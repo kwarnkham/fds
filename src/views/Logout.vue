@@ -16,7 +16,7 @@
 // import SnackBar from '../components/SnackBar'
 
 export default {
-  name: "Home",
+  name: "Logout",
   components: {
     // Register,
     // Login,

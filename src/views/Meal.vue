@@ -25,7 +25,7 @@
     </v-flex>
 
     <FullScreenDialog ref="loginDialog">
-      <Login @openRegisterDialog="openRegisterDialog"/>
+      <LoginComponent @openRegisterDialog="openRegisterDialog"/>
     </FullScreenDialog>
     <FullScreenDialog ref="registerDialog">
       <Register/>
@@ -37,7 +37,7 @@
 import MealComponent from "../components/MealComponent";
 import FullScreenDialog from "../components/FullScreenDialog";
 import Register from "../components/Register";
-import Login from "../components/Login";
+import LoginComponent from "../components/LoginComponent";
 
 export default {
   name: "Meal",
@@ -45,7 +45,7 @@ export default {
     MealComponent,
     FullScreenDialog,
     Register,
-    Login
+    LoginComponent
   },
   data: () => ({
     meals: [

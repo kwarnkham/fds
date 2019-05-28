@@ -31,7 +31,7 @@
             outline
           ></v-text-field>
           <div class="d-flex">
-            <v-btn :disabled="!valid" color="success" @click="register">Login</v-btn>
+            <v-btn :disabled="!valid" color="success" @click="login">Login</v-btn>
             <v-btn color="primary" @click="$emit('openRegisterDialog')">Register</v-btn>
           </div>
         </v-form>
@@ -41,7 +41,9 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  name: "LoginComponent",
   data: () => ({
     valid: true,
     mobile: "",
@@ -57,10 +59,19 @@ export default {
   }),
   computed: {},
   methods: {
-    register() {
+    login() {
       if (this.$refs.form.validate()) {
-        alert("can do");
-        this.reset();
+        axios({
+          method: "post",
+          url: `${this.$store.state.apiBaseUrl}/api_token/create`,
+          data: {
+            mobile: this.mobile,
+            password: this.password,
+          }
+        }).then(res=>{
+          console.log(res)
+        });
+        // this.reset();
       }
     },
     reset() {

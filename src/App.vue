@@ -16,6 +16,7 @@
 // import axios from "axios";
 import NavComponent from "./components/NavComponent";
 export default {
+  name:'App',
   components: {
     NavComponent
   },

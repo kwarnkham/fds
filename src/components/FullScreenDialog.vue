@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name:'FullScreenDialog',
   data() {
     return {
       dialog: false,

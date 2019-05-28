@@ -78,7 +78,7 @@ export default {
       if (this.$store.state.token == null) {
         return false;
       }
-      if (this.$store.state.token != null) {
+      else {
         return true;
       }
     }
