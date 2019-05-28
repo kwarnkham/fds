@@ -9,7 +9,7 @@
           <v-text-field
             autofocus
             v-model="name"
-            :counter="10"
+            :counter="20"
             :rules="nameRules"
             label="Name"
             required
@@ -64,17 +64,24 @@
         </v-form>
       </v-card>
     </v-flex>
+    <SnackBar ref="snackBar">{{message}}</SnackBar>
   </v-layout>
 </template>
 
 <script>
+import axios from "axios";
+import SnackBar from "./SnackBar";
 export default {
+  name: "Register",
+  components: {
+    SnackBar
+  },
   data: () => ({
     valid: true,
     name: "",
     nameRules: [
       v => !!v || "Name is required",
-      v => (v && v.length <= 10) || "Name must be less than 10 characters"
+      v => (v && v.length <= 20) || "Name must be less than 10 characters"
     ],
     mobile: "",
     mobileRules: [
@@ -92,7 +99,8 @@ export default {
     ],
     passwordConfirmation: "",
     showPassword: false,
-    showPasswordConfirmation: false
+    showPasswordConfirmation: false,
+    message: "",
   }),
   computed: {
     passwordConfirmationRules() {
@@ -105,8 +113,32 @@ export default {
   methods: {
     register() {
       if (this.$refs.form.validate()) {
-        alert("can do");
-        this.reset();
+        axios({
+          method: "post",
+          url: `${this.$store.state.apiBaseUrl}/user/create`,
+          data: {
+            name: this.name,
+            mobile: this.mobile,
+            password: this.password,
+            password_confirmation: this.passwordConfirmation
+          }
+        })
+          .then(res => {
+            console.log(res);
+            if(res.status == '200'){
+              this.message = 'Registraion is successful'
+              this.$refs.snackBar.toggleSnackBar(true, 'success')
+              this.reset();
+              this.$store.dispatch('setToken', res.data.result.api_token)
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            if(err.response.status == '422'){
+              this.message = err.response.data.errors.mobile[0]
+              this.$refs.snackBar.toggleSnackBar(true, 'error')
+            }
+          });
       }
     },
     reset() {

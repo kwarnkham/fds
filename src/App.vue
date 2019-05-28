@@ -20,18 +20,9 @@ export default {
     NavComponent
   },
   mounted() {
-    //   axios({
-    //     method: "post",
-    //     url: `${this.$store.state.apiBaseUrl}/user/create`,
-    //     data: {
-    //       name: "Moon",
-    //       mobile: "095088369",
-    //       password: "ninjasaga",
-    //       password_confirmation: "ninjasaga"
-    //     }
-    //   })
-    //     .then(res => console.log(res))
-    //     .catch(err => console.log(err.response));
+    if(localStorage.getItem('token')!= null){
+      this.$store.dispatch('setToken', localStorage.getItem('token'))
+    }
   }
 };
 </script>
