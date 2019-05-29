@@ -5,7 +5,7 @@
         <span
           class="display-1 font-italic font-weight-light text-xs-center d-block pt-3"
         >Registraion</span>
-        <v-form ref="form" v-model="valid" lazy-validation class="pa-3">
+        <v-form ref="regForm" v-model="valid" lazy-validation class="pa-3">
           <v-text-field
             autofocus
             v-model="name"
@@ -46,6 +46,7 @@
             color="deep-purple darken-2"
             outline
           ></v-text-field>
+
           <v-text-field
             v-model="passwordConfirmation"
             :rules="passwordConfirmationRules"
@@ -60,30 +61,38 @@
             color="deep-purple darken-2"
             outline
           ></v-text-field>
-          <v-btn :disabled="!valid" color="primary" @click="register(name,mobile,password,passwordConfirmation)" block>Register</v-btn>
+
+          <v-btn
+            :disabled="isDisabled"
+            color="primary"
+            @click="validate()"
+            block
+            :loading="isLoading"
+          >Register</v-btn>
+          
         </v-form>
       </v-card>
     </v-flex>
-    <SnackBar ref="snackBar" @snackBarClosed='message=""'>{{message}}</SnackBar>
+    <SnackBar ref="snackBar" @snackBarClosed="clearMessage">{{message}}</SnackBar>
   </v-layout>
 </template>
 
 <script>
 import SnackBar from "./SnackBar";
-import {apiMixin} from "../mixins/apiMixin"
+import { apiMixin } from "../mixins/apiMixin";
 export default {
   name: "Register",
   components: {
     SnackBar
   },
-  mixins:[apiMixin],
+  mixins: [apiMixin],
   data: () => ({
     // errors: new Errors(),
-    valid: true,
+    valid: false,
     name: "",
     nameRules: [
       v => !!v || "Name is required",
-      v => (v && v.length <= 20) || "Name must be less than 10 characters"
+      v => (v && v.length >= 4 && v.length <= 20) || "Name must be between 4 and 20 characters"
     ],
     mobile: "",
     mobileRules: [
@@ -102,7 +111,8 @@ export default {
     passwordConfirmation: "",
     showPassword: false,
     showPasswordConfirmation: false,
-    message: ""
+    message: "",
+    isLoading: false
   }),
   computed: {
     passwordConfirmationRules() {
@@ -110,16 +120,37 @@ export default {
         v => !!v || "Password is required",
         v => (v && v == this.password) || "Passwords do not match"
       ];
+    },
+    isDisabled() {
+      if (this.valid == false || this.isLoading == true) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
-
+    clearMessage() {
+      this.message = "";
+    },
+    validate() {
+      if (this.$refs.regForm.validate()) {
+        this.register(
+          this.name,
+          this.mobile,
+          this.password,
+          this.passwordConfirmation
+        );
+      }
+    }
   },
   mounted() {
-    this.$on('registerResponse', (message, status)=>{
+    this.$on("registerResponse", (message, status) => {
       this.message = message;
       this.$refs.snackBar.toggleSnackBar(true, status);
-    })
+    });
+
+    // this.$refs.regForm.reset();
   }
 };
 </script>

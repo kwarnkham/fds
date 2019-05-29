@@ -27,7 +27,11 @@ export default {
     toggleSnackBar(status, color = "info", duration = 6000) {
       this.snackbar = status;
       this.color = color;
-      this.duration = duration;
+      if (status == "error") {
+        this.duration = 10000;
+      } else {
+        this.duration = duration;
+      }
     }
   }
 };

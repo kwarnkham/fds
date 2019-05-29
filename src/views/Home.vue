@@ -1,10 +1,10 @@
 <template>
   <v-layout align-center justify-center row fill-height>
     <v-flex xs-12>
-      <!-- <Login/>
-      <Register/> -->
+      <!-- <Login/> -->
+      <!-- <Register/> -->
       <!-- <SnackBar/> -->
-      <PromptDialog/>
+      <!-- <PromptDialog/> -->
       <p v-show="$store.state.token != null">You are logged in</p>
       <p v-show="$store.state.token == null">You are not logged in</p>
     </v-flex>
@@ -15,7 +15,7 @@
 // import Register from "../components/Register";
 // import Login from "../components/Login";
 // import SnackBar from '../components/SnackBar'
-import PromptDialog from '../components/PromptDialog'
+// import PromptDialog from '../components/PromptDialog'
 
 export default {
   name: "Home",
@@ -23,7 +23,7 @@ export default {
     // Register,
     // Login,
     // SnackBar,
-    PromptDialog
+    // PromptDialog
   }
 };
 </script>

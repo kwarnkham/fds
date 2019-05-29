@@ -6,6 +6,7 @@ export const apiMixin = {
     methods: {
         //register
         register(name, mobile, password, passwordConfirmation) {
+            this.isLoading= true
             axios({
                 method: "post",
                 url: `/user/create`,
@@ -30,11 +31,12 @@ export const apiMixin = {
                         apiMessage += ` ${err.response.data.errors[key]}`;
                     }
                     this.$emit('registerResponse', apiMessage, 'error')
-                });
+                }).finally(() => this.isLoading = false);
 
         },
         //login
         login(mobile, password) {
+            this.isLoading = true;
             axios({
                 method: "post",
                 url: `/api_token/create`,
@@ -59,7 +61,7 @@ export const apiMixin = {
                         apiMessage += ` ${err.response.data.errors[key]}`;
                     }
                     this.$emit('loginResponse', apiMessage, 'error')
-                });
+                }).finally(() => this.isLoading = false);
         },
         //logout
         logout() {
