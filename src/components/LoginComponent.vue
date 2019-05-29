@@ -31,7 +31,7 @@
             outline
           ></v-text-field>
           <div class="d-flex">
-            <v-btn :disabled="!valid" color="success" @click="login">Login</v-btn>
+            <v-btn :disabled="!valid" color="success" @click="login(mobile,password)">Login</v-btn>
             <v-btn color="primary" @click="$emit('openRegisterDialog')">Register</v-btn>
           </div>
         </v-form>
@@ -40,12 +40,12 @@
     <FullScreenDialog ref="registerDialog">
       <Register/>
     </FullScreenDialog>
-    <SnackBar ref="snackBar" @snackBarClosed='message=""'>{{message}}</SnackBar>
+    <SnackBar ref="snackBar" @snackBarClosed="message=''">{{message}}</SnackBar>
   </v-layout>
 </template>
 
 <script>
-import axios from "axios";
+import {apiMixin} from "../mixins/apiMixin"
 import Register from "./Register";
 import FullScreenDialog from "./FullScreenDialog";
 import SnackBar from "./SnackBar";
@@ -56,6 +56,7 @@ export default {
     FullScreenDialog,
     SnackBar
   },
+  mixins:[apiMixin],
   data: () => ({
     valid: true,
     mobile: "",
@@ -72,42 +73,16 @@ export default {
   }),
   computed: {},
   methods: {
-    login() {
-      if (this.$refs.form.validate()) {
-        axios({
-          method: "post",
-          url: `${this.$store.state.apiBaseUrl}/api_token/create`,
-          data: {
-            mobile: this.mobile,
-            password: this.password
-          }
-        })
-          .then(res => {
-            console.log(res);
-            this.message= res.data.message;
-            if(res.data.token == undefined){
-              this.$refs.snackBar.toggleSnackBar(true, "error");
-            }
-            else{
-              this.$refs.snackBar.toggleSnackBar(true, "success");
-            }
-            this.$store.dispatch("setToken", res.data.token);
-          })
-          .catch(err => {
-            console.log(err.response);
-            for (let key in err.response.data.errors) {
-              this.message += ` ${err.response.data.errors[key]}`;
-              this.$refs.snackBar.toggleSnackBar(true, "error");
-            }
-          });
-      }
-    }
+
   },
   mounted() {
     this.$on("openRegisterDialog", () => {
       this.$refs.registerDialog.toggleDialog(true);
     });
-    // this.login();
+    this.$on('loginResponse', (message, status)=>{
+      this.message = message;
+      this.$refs.snackBar.toggleSnackBar(true, status);
+    })
   }
 };
 </script>

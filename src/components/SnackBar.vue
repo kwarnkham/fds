@@ -1,5 +1,5 @@
 <template>
-  <v-snackbar auto-height v-model="snackbar" bottom right :timeout="10000" :color="color">
+  <v-snackbar auto-height v-model="snackbar" bottom right :timeout="duration" :color="color">
     <slot>This is to show you something is happening and so you know what or how to react or our app is working</slot>
     <v-btn @click="snackbar = false" icon color="grey darken-4">
       <v-icon>close</v-icon>
@@ -12,7 +12,8 @@ export default {
   data() {
     return {
       snackbar: false,
-      color: "info"
+      color: "info",
+      duration: 6000
     };
   },
   watch: {
@@ -23,9 +24,10 @@ export default {
     }
   },
   methods: {
-    toggleSnackBar(status, color = "info") {
+    toggleSnackBar(status, color = "info", duration = 6000) {
       this.snackbar = status;
       this.color = color;
+      this.duration = duration;
     }
   }
 };

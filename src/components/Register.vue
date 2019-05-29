@@ -60,7 +60,7 @@
             color="deep-purple darken-2"
             outline
           ></v-text-field>
-          <v-btn :disabled="!valid" color="primary" @click="register" block>Register</v-btn>
+          <v-btn :disabled="!valid" color="primary" @click="register(name,mobile,password,passwordConfirmation)" block>Register</v-btn>
         </v-form>
       </v-card>
     </v-flex>
@@ -69,13 +69,14 @@
 </template>
 
 <script>
-import axios from "axios";
 import SnackBar from "./SnackBar";
+import {apiMixin} from "../mixins/apiMixin"
 export default {
   name: "Register",
   components: {
     SnackBar
   },
+  mixins:[apiMixin],
   data: () => ({
     // errors: new Errors(),
     valid: true,
@@ -112,39 +113,13 @@ export default {
     }
   },
   methods: {
-    register() {
-      if (this.$refs.form.validate()) {
-        axios({
-          method: "post",
-          url: `${this.$store.state.apiBaseUrl}/user/create`,
-          data: {
-            name: this.name,
-            mobile: this.mobile,
-            password: this.password,
-            password_confirmation: this.passwordConfirmation
-          }
-        })
-          .then(res => {
-            // console.log(res);
-            if (res.status == "200") {
-              this.message = "Registraion is successful";
-              this.$refs.snackBar.toggleSnackBar(true, "success");
-              // this.$refs.form.reset();
-              this.$store.dispatch("setToken", res.data.token);
-            }
-          })
-          .catch(err => {
-            console.log(err)
-            for (let key in err.response.data.errors) {
-              this.message += ` ${err.response.data.errors[key]}`;
-            }
-            this.$refs.snackBar.toggleSnackBar(true, "error");
-          });
-      }
-    }
-  },
-  created() {
 
+  },
+  mounted() {
+    this.$on('registerResponse', (message, status)=>{
+      this.message = message;
+      this.$refs.snackBar.toggleSnackBar(true, status);
+    })
   }
 };
 </script>
