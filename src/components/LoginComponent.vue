@@ -85,7 +85,12 @@ export default {
           .then(res => {
             console.log(res);
             this.message= res.data.message;
-            this.$refs.snackBar.toggleSnackBar(true, "success");
+            if(res.data.token == undefined){
+              this.$refs.snackBar.toggleSnackBar(true, "error");
+            }
+            else{
+              this.$refs.snackBar.toggleSnackBar(true, "success");
+            }
             this.$store.dispatch("setToken", res.data.token);
           })
           .catch(err => {
