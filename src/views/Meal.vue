@@ -8,23 +8,27 @@
         <template v-slot:title>
           <span>{{meal.name}}</span>
         </template>
-        <v-btn
+        <!-- <v-btn
           v-if="$store.state.token == null"
           depressed
           class="grey"
           @click.native="$refs.loginDialog.toggleDialog(true)"
-        >Order</v-btn>
+        >Order</v-btn>-->
         <v-btn
-          v-if="$store.state.token != null"
+          v-if="$store.state.token == null"
           depressed
-          class="orange"
-          @click.native="order"
+          class="grey"
+          @click.native="order(meal)"
         >Order</v-btn>
+        <!-- <v-btn v-if="$store.state.token != null" depressed class="orange" @click="order">Order</v-btn> -->
         <v-btn depressed color="info">Detail</v-btn>
       </MealComponent>
     </v-flex>
     <FullScreenDialog ref="loginDialog">
       <LoginComponent v-if="$store.state.token == null"/>
+    </FullScreenDialog>
+    <FullScreenDialog ref="orderDialog">
+      <PhoneOrder />
     </FullScreenDialog>
   </v-layout>
 </template>
@@ -33,13 +37,15 @@
 import MealComponent from "../components/MealComponent";
 import FullScreenDialog from "../components/FullScreenDialog";
 import LoginComponent from "../components/LoginComponent";
+import PhoneOrder from "../components/PhoneOrder";
 
 export default {
   name: "Meal",
   components: {
     MealComponent,
     FullScreenDialog,
-    LoginComponent
+    LoginComponent,
+    PhoneOrder
   },
   data: () => ({
     meals: [
@@ -53,22 +59,22 @@ export default {
       { picture: require("@/assets/food8.jpg"), name: "food8" }
     ]
   }),
-  computed:{
-    isLogin(){
-      return this.$store.state.token == null ? false: true
+  computed: {
+    isLogin() {
+      return this.$store.state.token == null ? false : true;
     }
   },
-  watch:{
-    isLogin(status){
-      if(status){
-        this.$refs.loginDialog.toggleDialog(false)
-        
+  watch: {
+    isLogin(status) {
+      if (status) {
+        this.$refs.loginDialog.toggleDialog(false);
       }
     }
   },
   methods: {
-    order(){
-      alert('ordering')
+    order(meal) {
+      this.$refs.orderDialog.toggleDialog(true);
+      this.$store.dispatch('setCurrentOrderingMeal', meal)
     }
   }
 };

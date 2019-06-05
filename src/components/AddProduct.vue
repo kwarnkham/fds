@@ -89,6 +89,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.regForm.validate()) {
+        alert('adding')
       }
     }
   }

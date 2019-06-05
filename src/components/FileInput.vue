@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style <style scoped>
+<style scoped>
 input[type="file"] {
   position: absolute;
   left: -99999px;

@@ -1,10 +1,17 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" lazy class="grey lighten-3">
+  <v-dialog
+    v-model="dialog"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+    lazy
+    class="grey lighten-3"
+  >
     <v-card style="height:100%;">
       <v-toolbar dark color="primary" app>
         <v-btn icon dark @click="dialog = false">
           <v-icon>close</v-icon>
-        </v-btn>    
+        </v-btn>
       </v-toolbar>
       <v-layout align-center justify-center row fill-height>
         <v-flex xs-12>
@@ -17,19 +24,16 @@
 
 <script>
 export default {
-  name:'FullScreenDialog',
+  name: "FullScreenDialog",
   data() {
     return {
-      dialog: false,
-      notifications: false,
-      sound: true,
-      widgets: false
-    }
+      dialog: false
+    };
   },
-  methods:{
-      toggleDialog(status){
-          this.dialog=status;
-      }
+  methods: {
+    toggleDialog(status) {
+      this.dialog = status;
+    }
   }
 };
 </script>

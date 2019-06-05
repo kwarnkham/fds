@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     apiBaseUrl: 'http://127.0.0.1:8000/api',
-    token: null
+    token: null,
+    currentOrderingMeal:{}
   },
   mutations: {
     setToken: (state, payload) => {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     removeToken: (state)=>{
       localStorage.removeItem('token');
       state.token = null
+    },
+    setCurrentOrderingMeal: (state, payload) =>{
+      state.currentOrderingMeal=payload
     }
   },
   actions: {
@@ -24,6 +28,9 @@ export default new Vuex.Store({
     },
     removeToken:(context) => {
       context.commit('removeToken')
+    },
+    setCurrentOrderingMeal:(context, payload) => {
+      context.commit('setCurrentOrderingMeal', payload)
     }
   }
 })

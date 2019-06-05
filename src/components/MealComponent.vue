@@ -1,7 +1,7 @@
 <template>
-  <v-card class="ma-2">
+  <v-card class="ma-1 pt-3">
     <!-- <v-img height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"></v-img> -->
-    <slot name="image"></slot>
+    <slot name="image" id="image"></slot>
     <v-card-title>
       <slot name="title"></slot>
     </v-card-title>
@@ -15,3 +15,4 @@ export default {
   name:'MealComponent'
 };
 </script>
+
