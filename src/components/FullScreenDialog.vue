@@ -8,13 +8,11 @@
     class="grey lighten-3"
   >
     <v-card style="height:100%;">
-      <v-toolbar dark color="primary" app>
-        <v-btn icon dark @click="dialog = false">
-          <v-icon>close</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-layout align-center justify-center row fill-height>
-        <v-flex xs-12>
+      <v-layout justify-center row wrap>
+        <v-flex xs12 class="grey darken-3">
+          <v-btn class="ma-0 grey darken-3" depressed block @click="dialog = false"><v-icon color="white">close</v-icon></v-btn>
+        </v-flex>
+        <v-flex xs12 md6>
           <slot></slot>
         </v-flex>
       </v-layout>

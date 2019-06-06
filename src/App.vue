@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <!-- <NavComponent/> -->
     <Toolbar @toggleNav="toggleNav"/>
     <Nav ref="nav"/>
     <v-content>
-      <v-container fluid class="pa-0 ma-0">
+      <v-container fluid class="pa-0 grey lighten-2" fill-height>
         <router-view/>
       </v-container>
     </v-content>
@@ -15,7 +14,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+
 import Toolbar from "./components/Toolbar";
 import Nav from "./components/Nav";
 export default {

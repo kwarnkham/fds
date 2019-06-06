@@ -1,6 +1,6 @@
 <template>
-  <v-layout row justify-center algin-center>
-    <v-flex xs12 md6>
+  <!-- <v-layout row justify-center algin-center>
+    <v-flex xs12 md6> -->
       <v-card color="orange lighten-5">
         <v-card-title primary-title>
           <p class="text-xs-center font-weight-bold title">To Add To Cart</p>
@@ -17,8 +17,8 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-flex>
-  </v-layout>
+    <!-- </v-flex>
+  </v-layout> -->
 </template>
 
 <script>

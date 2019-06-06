@@ -9,7 +9,6 @@ export default new Vuex.Store({
     token: null,
     toAddToCartMeal:{},
     cartItem:[],
-    cartLayoutHack: true
   },
   mutations: {
     setToken: (state, payload) => {
@@ -27,10 +26,6 @@ export default new Vuex.Store({
       state.cartItem.push(state.toAddToCartMeal)
       state.toAddToCartMeal= {}
     },
-    cartLayoutHack: (state) => {
-      state.cartLayoutHack = false;
-      state.cartLayoutHack = true;
-    }
   },
   actions: {
     setToken: (context, payload) => {
@@ -45,8 +40,5 @@ export default new Vuex.Store({
     addToCart:(context) => {
       context.commit('addToCart')
     },
-    cartLayoutHack:(context) => {
-      context.commit('cartLayoutHack')
-    }
   }
 })

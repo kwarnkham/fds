@@ -1,6 +1,6 @@
 <template>
-  <v-layout align-center justify-center row fill-height>
-    <v-flex xs-12>
+  <v-layout justify-center row fill-height>
+    <v-flex xs12 md6>
       <AddProduct/>
     </v-flex>
   </v-layout>

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar :app="app" clipped-left>
+  <v-toolbar app absolute clipped-left>
     <v-toolbar-side-icon @click.stop="$emit('toggleNav')"></v-toolbar-side-icon>
     <v-toolbar-title>Food Delivery</v-toolbar-title>
     <v-spacer></v-spacer>
@@ -14,16 +14,18 @@
 
 <script>
 export default {
-    name:'Toolbar',
-    data:()=>({
+  name: "Toolbar",
+  data: () => ({}),
+  computed: {
 
-    }),
-    computed:{
-      app(){
-        return this.$store.state.cartLayoutHack
-      }
-    }
+  }
 };
 </script>
+<style scoped>
+.toolbar{
+  z-index: 999;
+}
+</style>
+
 
 
