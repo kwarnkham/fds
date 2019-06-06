@@ -1,13 +1,17 @@
 <template>
   <div>
-    <v-navigation-drawer
-      v-model="drawerToggler"
-      absolute
-      app
-      disable-route-watcher
-      disable-resize-watcher
-      temporary
-    >
+    <v-toolbar app clipped-left>
+      <v-toolbar-side-icon @click.stop="drawerToggler = !drawerToggler"></v-toolbar-side-icon>
+      <v-toolbar-title>Food Delivery</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-badge left @click.native="$router.push('/cart')">
+        <template v-slot:badge>
+          <span>{{$store.state.cartItem.length}}</span>
+        </template>
+        <v-icon>shopping_cart</v-icon>
+      </v-badge>
+    </v-toolbar>
+    <v-navigation-drawer v-model="drawerToggler" app clipped>
       <v-list class="pa-1">
         <v-list-tile avatar tag="div">
           <v-list-tile-avatar>
@@ -40,10 +44,10 @@
                 @Agreed="logout"
                 v-if="item.title == 'Logout'"
               >Do you really want to log out?</PromptDialog>
+
               <router-link
                 v-if="item.title != 'Logout'"
                 :to="item.to"
-                @click.native.passive="drawerToggler = !drawerToggler"
                 :class="{activeColor:$route.path == item.to}"
               >{{ item.title }}</router-link>
             </v-list-tile-title>
@@ -51,10 +55,6 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app absolute>
-      <v-toolbar-side-icon @click.stop="drawerToggler = !drawerToggler"></v-toolbar-side-icon>
-      <v-toolbar-title>Food Delivery System</v-toolbar-title>
-    </v-toolbar>
   </div>
 </template>
 
@@ -66,10 +66,11 @@ export default {
     PromptDialog
   },
   data: () => ({
-    drawerToggler: false,
+    drawerToggler: null,
     items: [
       { title: "Home", icon: "dashboard", to: "/" },
-      { title: "Meal", icon: "question_answer", to: "/meal" }
+      { title: "Meal", icon: "question_answer", to: "/meal" },
+      { title: "Checkout", icon: "shopping_cart", to: "/cart" }
     ]
   }),
   mounted() {

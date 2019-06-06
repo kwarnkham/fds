@@ -1,12 +1,14 @@
 <template>
   <v-app>
-    <NavComponent/>
+    <!-- <NavComponent/> -->
+    <Toolbar @toggleNav="toggleNav"/>
+    <Nav ref="nav"/>
     <v-content>
-      <v-container fluid fill-height class="pa-0 ma-0">
+      <v-container fluid class="pa-0 ma-0">
         <router-view/>
       </v-container>
     </v-content>
-    <v-footer :inset="true" app>
+    <v-footer app>
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -14,15 +16,22 @@
 
 <script>
 // import axios from "axios";
-import NavComponent from "./components/NavComponent";
+import Toolbar from "./components/Toolbar";
+import Nav from "./components/Nav";
 export default {
-  name:'App',
+  name: "App",
   components: {
-    NavComponent
+    Toolbar,
+    Nav
+  },
+  methods:{
+    toggleNav(){
+      this.$refs.nav.toggleNav()
+    }
   },
   mounted() {
-    if(localStorage.getItem('token')!= null){
-      this.$store.dispatch('setToken', localStorage.getItem('token'))
+    if (localStorage.getItem("token") != null) {
+      this.$store.dispatch("setToken", localStorage.getItem("token"));
     }
   }
 };

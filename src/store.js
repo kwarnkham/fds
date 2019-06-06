@@ -7,7 +7,9 @@ export default new Vuex.Store({
   state: {
     apiBaseUrl: 'http://127.0.0.1:8000/api',
     token: null,
-    currentOrderingMeal:{}
+    toAddToCartMeal:{},
+    cartItem:[],
+    cartLayoutHack: true
   },
   mutations: {
     setToken: (state, payload) => {
@@ -18,8 +20,16 @@ export default new Vuex.Store({
       localStorage.removeItem('token');
       state.token = null
     },
-    setCurrentOrderingMeal: (state, payload) =>{
-      state.currentOrderingMeal=payload
+    setToAddToCartMeal: (state, payload) =>{
+      state.toAddToCartMeal=payload
+    },
+    addToCart: (state) =>{
+      state.cartItem.push(state.toAddToCartMeal)
+      state.toAddToCartMeal= {}
+    },
+    cartLayoutHack: (state) => {
+      state.cartLayoutHack = false;
+      state.cartLayoutHack = true;
     }
   },
   actions: {
@@ -29,8 +39,14 @@ export default new Vuex.Store({
     removeToken:(context) => {
       context.commit('removeToken')
     },
-    setCurrentOrderingMeal:(context, payload) => {
-      context.commit('setCurrentOrderingMeal', payload)
+    setToAddToCartMeal:(context, payload) => {
+      context.commit('setToAddToCartMeal', payload)
+    },
+    addToCart:(context) => {
+      context.commit('addToCart')
+    },
+    cartLayoutHack:(context) => {
+      context.commit('cartLayoutHack')
     }
   }
 })

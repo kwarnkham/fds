@@ -5,6 +5,9 @@
     <v-card-title>
       <slot name="title"></slot>
     </v-card-title>
+    <v-card-text>
+      <slot name="price"></slot>
+    </v-card-text>
     <v-card-actions class="d-flex" align-content-space-between>
       <slot></slot>
     </v-card-actions>

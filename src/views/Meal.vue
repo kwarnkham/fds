@@ -8,27 +8,24 @@
         <template v-slot:title>
           <span>{{meal.name}}</span>
         </template>
-        <!-- <v-btn
-          v-if="$store.state.token == null"
-          depressed
-          class="grey"
-          @click.native="$refs.loginDialog.toggleDialog(true)"
-        >Order</v-btn>-->
+        <template v-slot:price>
+          <span>1000 MMK</span>
+        </template>
         <v-btn
           v-if="$store.state.token == null"
           depressed
-          class="grey"
-          @click.native="order(meal)"
-        >Order</v-btn>
-        <!-- <v-btn v-if="$store.state.token != null" depressed class="orange" @click="order">Order</v-btn> -->
-        <v-btn depressed color="info">Detail</v-btn>
+          class="success"
+          @click.native="toAddToCart(meal)"
+        >
+          <v-icon>add_shopping_cart</v-icon>
+        </v-btn>
       </MealComponent>
     </v-flex>
     <FullScreenDialog ref="loginDialog">
       <LoginComponent v-if="$store.state.token == null"/>
     </FullScreenDialog>
-    <FullScreenDialog ref="orderDialog">
-      <PhoneOrder />
+    <FullScreenDialog ref="toAddToCartDialog">
+      <ToAddToCart @closeFullScreenDialog="closeToAddToCartDialog"/>
     </FullScreenDialog>
   </v-layout>
 </template>
@@ -37,7 +34,7 @@
 import MealComponent from "../components/MealComponent";
 import FullScreenDialog from "../components/FullScreenDialog";
 import LoginComponent from "../components/LoginComponent";
-import PhoneOrder from "../components/PhoneOrder";
+import ToAddToCart from "../components/ToAddToCart";
 
 export default {
   name: "Meal",
@@ -45,7 +42,7 @@ export default {
     MealComponent,
     FullScreenDialog,
     LoginComponent,
-    PhoneOrder
+    ToAddToCart
   },
   data: () => ({
     meals: [
@@ -72,9 +69,12 @@ export default {
     }
   },
   methods: {
-    order(meal) {
-      this.$refs.orderDialog.toggleDialog(true);
-      this.$store.dispatch('setCurrentOrderingMeal', meal)
+    toAddToCart(meal) {
+      this.$refs.toAddToCartDialog.toggleDialog(true);
+      this.$store.dispatch("setToAddToCartMeal", meal);
+    },
+    closeToAddToCartDialog() {
+      this.$refs.toAddToCartDialog.toggleDialog(false);
     }
   }
 };
