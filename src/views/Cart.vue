@@ -4,7 +4,7 @@
       <v-card class="mt-3">
         <v-card-title class="teal lighten-1 title">Check Out</v-card-title>
         <v-card-text class="pa-0">
-          <DataTable/>
+          <!-- <DataTable/> -->
           <!-- <v-layout row align-center class="grey lighten-1 pa-1">
             <v-flex xs2>Remove</v-flex>
             <v-flex xs5>Name</v-flex>
@@ -38,7 +38,7 @@ import DataTable from "@/components/DataTable";
 export default {
   name: "Cart",
   components: {
-    DataTable
+    // DataTable
   },
   data: () => ({
     tableHeaders: [

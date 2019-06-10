@@ -1,17 +1,18 @@
 <template>
   <v-layout justify-center row fill-height>
-    <v-flex xs12 md6>
-      <AddProduct/>
+    <v-flex xs12>
+      <AddOrder/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import AddProduct from '@/components/AddProduct'
+import AddOrder from '@/components/AddOrder'
 export default {
   name: "Home",
   components: {
-    AddProduct
-  }
+    AddOrder
+  },
+  data:()=>({})
 };
 </script>
