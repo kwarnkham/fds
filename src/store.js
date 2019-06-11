@@ -7,38 +7,38 @@ export default new Vuex.Store({
   state: {
     apiBaseUrl: 'http://127.0.0.1:8000/api',
     token: null,
-    toAddToCartMeal:{},
-    cartItem:[],
+    mealDetail: {},
+    cartItem: [],
   },
   mutations: {
     setToken: (state, payload) => {
       localStorage.setItem('token', payload)
       state.token = payload
     },
-    removeToken: (state)=>{
+    removeToken: (state) => {
       localStorage.removeItem('token');
       state.token = null
     },
-    setToAddToCartMeal: (state, payload) =>{
-      state.toAddToCartMeal=payload
+    setMealDetail: (state, payload) => {
+      state.mealDetail = payload
     },
-    addToCart: (state) =>{
-      state.cartItem.push(state.toAddToCartMeal)
-      state.toAddToCartMeal= {}
+    addToCart: (state, payload) => {
+      state.cartItem.push(payload)
+      state.mealDetail = {}
     },
   },
   actions: {
     setToken: (context, payload) => {
       context.commit('setToken', payload)
     },
-    removeToken:(context) => {
+    removeToken: (context) => {
       context.commit('removeToken')
     },
-    setToAddToCartMeal:(context, payload) => {
-      context.commit('setToAddToCartMeal', payload)
+    setMealDetail: (context, payload) => {
+      context.commit('setMealDetail', payload)
     },
-    addToCart:(context) => {
-      context.commit('addToCart')
+    addToCart: (context, payload) => {
+      context.commit('addToCart', payload)
     },
   }
 })

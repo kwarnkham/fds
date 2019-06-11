@@ -8,7 +8,7 @@
     <v-card-text>
       <slot name="price"></slot>
     </v-card-text>
-    <v-card-actions class="d-flex" align-content-space-between>
+    <v-card-actions align-content-space-between>
       <slot></slot>
     </v-card-actions>
   </v-card>

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawerToggler" absolute overflow app clipped floating width="200">
+  <v-navigation-drawer v-model="drawerToggler" overflow app clipped floating width="200">
     <v-list class="pt-0" dense>
       <v-divider light></v-divider>
       <v-list-tile v-for="item in items" :key="item.title" class="mt-3">

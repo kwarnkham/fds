@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app absolute clipped-left>
+  <v-toolbar app clipped-left>
     <v-toolbar-side-icon @click.stop="$emit('toggleNav')"></v-toolbar-side-icon>
     <v-toolbar-title>Food Delivery</v-toolbar-title>
     <v-spacer></v-spacer>
