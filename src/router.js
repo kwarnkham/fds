@@ -33,5 +33,10 @@ export default new Router({
       name: 'cart',
       component: () => import(/* webpackChunkName: "meal" */ './views/Cart.vue')
     },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import(/* webpackChunkName: "meal" */ './views/Test.vue')
+    },
   ]
 })

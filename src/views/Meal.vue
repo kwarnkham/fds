@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mealComponentMixin } from "@/mixins/mealComponentMixin";
 import MealComponent from "../components/MealComponent";
 import MealDetail from "../components/MealDetail";
 import FullScreenDialog from "../components/FullScreenDialog";
@@ -45,6 +46,7 @@ export default {
     // LoginComponent,
     // ToAddToCart
   },
+  mixins:[mealComponentMixin],
   data: () => ({
     meals: [
       { picture: require("@/assets/food1.jpg"), name: "food1", price: 1000 },
@@ -72,13 +74,6 @@ export default {
   methods: {
     addToCart(meal) {
       this.$store.dispatch("addToCart", meal);
-    },
-    showDetail(meal){
-      this.$store.dispatch("setMealDetail", meal);
-      this.$refs.mealDetail.toggleDialog(true);
-    },
-    closeMealDetail() {
-      this.$refs.mealDetail.toggleDialog(false);
     }
   }
 };

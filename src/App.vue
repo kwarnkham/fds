@@ -9,12 +9,15 @@
     </v-content>
     <v-footer app>
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
+      <v-spacer></v-spacer>
+      <span class="px-3">
+        <v-icon small class="mr-1">phone</v-icon>09-7988888
+      </span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-
 import Toolbar from "./components/Toolbar";
 import Nav from "./components/Nav";
 export default {
@@ -23,9 +26,9 @@ export default {
     Toolbar,
     Nav
   },
-  methods:{
-    toggleNav(){
-      this.$refs.nav.toggleNav()
+  methods: {
+    toggleNav() {
+      this.$refs.nav.toggleNav();
     }
   },
   mounted() {

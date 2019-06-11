@@ -9,11 +9,18 @@
   >
     <template v-slot:items="props">
       <td>{{ props.item.name }}</td>
-      <td class="text-xs-right">{{ props.item.calories }}</td>
-      <td class="text-xs-right">{{ props.item.fat }}</td>
-      <td class="text-xs-right">{{ props.item.carbs }}</td>
-      <td class="text-xs-right">{{ props.item.protein }}</td>
-      <td class="text-xs-right">{{ props.item.iron }}</td>
+      <td>{{ props.item.price }}</td>
+      <td>{{ props.item.quantity }}</td>
+      <td>{{ props.item.amount }}</td>
+      <td>
+        <v-icon small @click="deleteItem(props.item.name)">delete</v-icon>
+      </td>
+    </template>
+    <template v-slot:footer v-if="$store.state.cartItem.length > 0">
+      <td :colspan="headers.length -2">
+        <strong class="text-xs-right d-block">Total Amount</strong>
+      </td>
+      <td>{{totalAmount}} MMK</td>
     </template>
   </v-data-table>
 </template>
@@ -25,31 +32,29 @@ export default {
     items: { type: Array, required: true }
   },
   data() {
-    return {
-      //   headers: [
-      //     {
-      //       text: "Dessert (100g serving)",
-      //       align: "left",
-      //       sortable: false,
-      //       value: "name"
-      //     },
-      //     { text: "Calories", value: "calories" },
-      //     { text: "Fat (g)", value: "fat" },
-      //     { text: "Carbs (g)", value: "carbs" },
-      //     { text: "Protein (g)", value: "protein" },
-      //     { text: "Iron (%)", value: "iron" }
-      //   ],
-      //   desserts: [
-      //     {
-      //       name: "Frozen Yogurt",
-      //       calories: 159,
-      //       fat: 6.0,
-      //       carbs: 24,
-      //       protein: 4.0,
-      //       iron: "1%"
-      //     }
-      //   ]
-    };
+    return {};
+  },
+  computed:{
+    totalAmount(){
+      let total = 0
+      this.$store.state.cartItem.forEach(item => total += item.amount)
+      return total
+    }
+  },
+  methods: {
+    deleteItem(name) {
+      let index = this.$store.state.cartItem.findIndex(
+        item => item.name == name
+      );
+      let item = this.$store.state.cartItem[index];
+      item.quantity -= 1;
+      if (item.quantity <= 0) {
+        this.$store.state.cartItem.splice(index, 1);
+      }
+      if (item.quantity > 0) {
+        this.$store.state.cartItem.splice(index, 1, item);
+      }
+    }
   }
 };
 </script>

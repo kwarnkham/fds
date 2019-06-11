@@ -5,7 +5,7 @@
     <v-spacer></v-spacer>
     <v-badge left @click.native="$router.push('/cart')">
       <template v-slot:badge>
-        <span>{{$store.state.cartItem.length}}</span>
+        <span>{{cartItemQty}}</span>
       </template>
       <v-icon>shopping_cart</v-icon>
     </v-badge>
@@ -17,7 +17,11 @@ export default {
   name: "Toolbar",
   data: () => ({}),
   computed: {
-
+    cartItemQty(){
+      let qty= 0
+      this.$store.state.cartItem.forEach(item => qty += item.quantity)
+      return qty
+    }
   }
 };
 </script>

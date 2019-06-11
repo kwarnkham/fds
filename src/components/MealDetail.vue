@@ -11,7 +11,7 @@
           <p>Price: {{$store.state.mealDetail.price}} MMK</p>
           <p>Description: This food is blah blah blah.</p>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions v-if="$route.name != 'cart'">
           <v-btn outline color="success" block @click.native="addToCart">
             <v-icon color="success" class="pr-2">add_shopping_cart</v-icon>Add to Cart
           </v-btn>
@@ -30,6 +30,9 @@ export default {
       this.$store.dispatch("addToCart", this.$store.state.mealDetail);
       this.$emit("closeFullScreenDialog");
     }
+  },
+  created(){
+    // console.log(this.$route.name)
   }
 };
 </script>
