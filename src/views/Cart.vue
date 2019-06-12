@@ -13,7 +13,7 @@
         >
           <v-text-field v-model="name" :rules="nameRules" label="Name" required clearable></v-text-field>
           <v-text-field
-            v-model="phone"
+            v-model="mobile"
             :rules="phoneRules"
             label="Phone"
             type="number"
@@ -54,7 +54,14 @@
             @click="showMeal = !showMeal"
           >Hide Meals</v-btn>
           <v-spacer></v-spacer>
-          <v-btn flat depressed outline color="success" @click="$refs.form.validate()">Submit Order</v-btn>
+          <v-btn
+            flat
+            depressed
+            outline
+            color="success"
+            @click="submitOrder(name, mobile, address, note)"
+            :loading="isLoading"
+          >Submit Order</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -92,6 +99,7 @@
 
 <script>
 import { mealComponentMixin } from "@/mixins/mealComponentMixin";
+import { apiMixin } from "@/mixins/apiMixin";
 import DataTable from "@/components/DataTable";
 import MealComponent from "@/components/MealComponent";
 import MealDetail from "../components/MealDetail";
@@ -104,8 +112,9 @@ export default {
     MealDetail,
     FullScreenDialog
   },
-  mixins: [mealComponentMixin],
+  mixins: [mealComponentMixin, apiMixin],
   data: () => ({
+    isLoading: false,
     tableHeaders: [
       {
         text: "Name",
@@ -122,7 +131,7 @@ export default {
     valid: true,
     name: "",
     nameRules: [v => !!v || "Name is required"],
-    phone: "",
+    mobile: "",
     phoneRules: [
       v => !!v || "Phone is required",
       v =>
@@ -138,7 +147,9 @@ export default {
       return this.$store.state.cartItem;
     }
   },
-  methods: {}
+  methods: {
+
+  }
 };
 </script>
 

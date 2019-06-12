@@ -6,7 +6,7 @@ export const apiMixin = {
     methods: {
         //register
         register(name, mobile, password, passwordConfirmation) {
-            this.isLoading= true
+            this.isLoading = true
             axios({
                 method: "post",
                 url: `/user/create`,
@@ -79,6 +79,31 @@ export const apiMixin = {
                     store.dispatch("removeToken");
                     this.$router.push("/");
                 });
+        },
+        //submitOrder
+        submitOrder(name, mobile, address, note) {
+            this.isLoading = true
+            axios({
+                method: "post",
+                url: `/order/submit`,
+                headers: { 'Authorization': 'Bearer ' + store.state.token },
+                data: {
+                    name: name,
+                    mobile: mobile,
+                    address: address,
+                    note: note,
+                    cartItem: store.state.cartItem
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err.response);
+                }).finally(() => {
+                    this.isLoading = false
+                });
+            
         }
     }
 }

@@ -22,7 +22,7 @@
     </v-flex>
     <!-- <FullScreenDialog ref="loginDialog">
       <LoginComponent v-if="$store.state.token == null"/>
-    </FullScreenDialog> -->
+    </FullScreenDialog>-->
     <FullScreenDialog ref="mealDetail">
       <MealDetail @closeFullScreenDialog="closeMealDetail"/>
     </FullScreenDialog>
@@ -42,21 +42,61 @@ export default {
   components: {
     MealComponent,
     MealDetail,
-    FullScreenDialog,
+    FullScreenDialog
     // LoginComponent,
     // ToAddToCart
   },
-  mixins:[mealComponentMixin],
+  mixins: [mealComponentMixin],
   data: () => ({
     meals: [
-      { picture: require("@/assets/food1.jpg"), name: "food1", price: 1000 },
-      { picture: require("@/assets/food2.jpg"), name: "food2", price: 1000 },
-      { picture: require("@/assets/food3.jpg"), name: "food3", price: 1000 },
-      { picture: require("@/assets/food4.jpg"), name: "food4", price: 1000 },
-      { picture: require("@/assets/food5.jpg"), name: "food5", price: 1000 },
-      { picture: require("@/assets/food6.jpg"), name: "food6", price: 1000 },
-      { picture: require("@/assets/food7.jpg"), name: "food7", price: 1000 },
-      { picture: require("@/assets/food8.jpg"), name: "food8", price: 1000 }
+      {
+        picture: require("@/assets/food1.jpg"),
+        name: "food1",
+        price: 1000,
+        id: 1
+      },
+      {
+        picture: require("@/assets/food2.jpg"),
+        name: "food2",
+        price: 1000,
+        id: 2
+      },
+      {
+        picture: require("@/assets/food3.jpg"),
+        name: "food3",
+        price: 1000,
+        id: 3
+      },
+      {
+        picture: require("@/assets/food4.jpg"),
+        name: "food4",
+        price: 1000,
+        id: 4
+      },
+      {
+        picture: require("@/assets/food5.jpg"),
+        name: "food5",
+        price: 1000,
+        id: 5
+      },
+      {
+        picture: require("@/assets/food6.jpg"),
+        name: "food6",
+        price: 1000,
+        id: 6
+      },
+      {
+        picture: require("@/assets/food7.jpg"),
+        name: "food7",
+        price: 1000,
+        id: 7
+      },
+      {
+        picture: require("@/assets/food8.jpg"),
+        name: "food8",
+        price: 1000,
+        id: 8
+      }
     ]
   }),
   computed: {
