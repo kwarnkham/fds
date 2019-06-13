@@ -1,5 +1,6 @@
 const axios = require('axios')
 import store from '../store'
+
 axios.defaults.baseURL = store.state.apiBaseUrl;
 axios.defaults.headers.common['Authorization'] = "Bearer " + store.state.token;
 export const apiMixin = {
@@ -130,18 +131,18 @@ export const apiMixin = {
         },
 
         //add product
-        addProduct(name, price, description) {
+        addProduct(name, price, description, files) {
+            let formData = new FormData();
+            formData.append('files', files);
+            formData.set('name', name)
+            formData.set('price', price)
+            formData.set('description', description)
             this.isLoading = true
             axios({
                 method: "post",
                 url: `/product/create`,
-                headers: { 'Authorization': 'Bearer ' + store.state.token },
-                data: {
-                    name: name,
-                    price: price,
-                    description: description,
-                    pictures: ''
-                }
+                headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
+                data: formData
             })
                 .then(res => {
                     console.log(res);

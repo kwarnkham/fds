@@ -12,11 +12,6 @@
       multiple
       @change="uploadImage($event)"
     >
-    <v-layout row wrap justify-center align-center>
-      <v-flex xs12 lg5 v-for="image in images" :key="image" class="pa-2">
-        <v-img alt="image" contain :src="image"/>
-      </v-flex>
-    </v-layout>
   </div>
 </template>
 
@@ -31,14 +26,9 @@ export default {
       this.$refs.fileInput.click();
     },
     uploadImage(e) {
-      this.images = [];
-      Array.from(e.target.files).forEach(image => {
-        let reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = reader => {
-          this.images.push(reader.target.result);
-        };
-      });
+      // console.log(this.$refs.fileInput.files);
+      // console.log(e);
+      this.$emit('uploadImage', e)
     }
   }
 };

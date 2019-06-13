@@ -44,7 +44,12 @@
             rows="2"
           ></v-textarea>
 
-          <FileInput/>
+          <FileInput @uploadImage="handleImage($event)"/>
+          <v-layout row wrap justify-center align-center>
+            <v-flex xs12 lg5 v-for="image in images" :key="image" class="pa-2">
+              <v-img alt="image" contain :src="image"/>
+            </v-flex>
+          </v-layout>
           <v-btn
             :disabled="isDisabled"
             color="primary"
@@ -60,13 +65,13 @@
 
 <script>
 import FileInput from "@/components/FileInput";
-import {apiMixin} from "@/mixins/apiMixin"
+import { apiMixin } from "@/mixins/apiMixin";
 export default {
   name: "AddProduct",
   components: {
     FileInput
   },
-  mixins:[apiMixin],
+  mixins: [apiMixin],
   data: () => ({
     valid: null,
     name: "",
@@ -81,7 +86,9 @@ export default {
     description: "",
     descriptionRules: [v => !!v || "Description is required"],
     message: "",
-    isLoading: false
+    isLoading: false,
+    images: [],
+    files:''
   }),
   computed: {
     isDisabled() {
@@ -95,8 +102,18 @@ export default {
   methods: {
     validate() {
       if (this.$refs.addProductForm.validate()) {
-        alert('adding')
+        this.addProduct(this.name, this.price, this.description, this.files);
       }
+    },
+    handleImage(e) {
+      this.files= e.target.files
+      Array.from(e.target.files).forEach(image => {
+        let reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = reader => {
+          this.images.push(reader.target.result);
+        };
+      });
     }
   }
 };
