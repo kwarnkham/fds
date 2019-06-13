@@ -21,17 +21,27 @@ export default new Router({
     // {
     //   path: '/logout',
     //   name: 'logout',
-    //   component: () => import(/* webpackChunkName: "meal" */ './views/Logout.vue')
+    //   component: () => import(/* webpackChunkName: "logout" */ './views/Logout.vue')
     // },
     // {
     //   path: '/login',
     //   name: 'login',
-    //   component: () => import(/* webpackChunkName: "meal" */ './views/Login.vue')
+    //   component: () => import(/* webpackChunkName: "login" */ './views/Login.vue')
     // },
     {
       path: '/cart',
       name: 'cart',
-      component: () => import(/* webpackChunkName: "meal" */ './views/Cart.vue')
+      component: () => import(/* webpackChunkName: "cart" */ './views/Cart.vue')
+    },
+    {
+      path: '/order/status',
+      name: 'orderStatus',
+      component: () => import(/* webpackChunkName: "order_status" */ './views/OrderStatus.vue'),
+    },
+    {
+      path: '/product/add',
+      name: 'addProduct',
+      component: () => import(/* webpackChunkName: "add_product" */ './views/AddProduct.vue'),
     },
     {
       path: '/test',

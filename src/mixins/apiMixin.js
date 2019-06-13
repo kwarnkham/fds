@@ -97,13 +97,62 @@ export const apiMixin = {
             })
                 .then(res => {
                     console.log(res);
+                    this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
                 })
                 .catch(err => {
                     console.log(err.response);
                 }).finally(() => {
                     this.isLoading = false
                 });
-            
-        }
+
+        },
+
+        //get order info
+        getOrderInfo(orderId, mobile) {
+            this.isLoading = true
+            axios({
+                method: "get",
+                url: `/order`,
+                headers: { 'Authorization': 'Bearer ' + store.state.token },
+                params: {
+                    order_id: orderId,
+                    mobile: mobile,
+                },
+            })
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err.response);
+                }).finally(() => {
+                    this.isLoading = false
+                });
+        },
+
+        //add product
+        addProduct(name, price, description) {
+            this.isLoading = true
+            axios({
+                method: "post",
+                url: `/product/create`,
+                headers: { 'Authorization': 'Bearer ' + store.state.token },
+                data: {
+                    name: name,
+                    price: price,
+                    description: description,
+                    pictures: ''
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                    // this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
+                })
+                .catch(err => {
+                    console.log(err.response);
+                }).finally(() => {
+                    this.isLoading = false
+                });
+
+        },
     }
 }

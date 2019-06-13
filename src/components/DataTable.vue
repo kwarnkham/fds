@@ -13,7 +13,8 @@
       <td>{{ props.item.quantity }}</td>
       <td>{{ props.item.amount }}</td>
       <td>
-        <v-icon small @click="deleteItem(props.item.name)">delete</v-icon>
+        <v-icon small @click="addItem(props.item.name)" class="mr-4">add</v-icon>
+        <v-icon small @click="deleteItem(props.item.name)">remove</v-icon>
       </td>
     </template>
     <template v-slot:footer v-if="$store.state.cartItem.length > 0">
@@ -34,11 +35,11 @@ export default {
   data() {
     return {};
   },
-  computed:{
-    totalAmount(){
-      let total = 0
-      this.$store.state.cartItem.forEach(item => total += item.amount)
-      return total
+  computed: {
+    totalAmount() {
+      let total = 0;
+      this.$store.state.cartItem.forEach(item => (total += item.amount));
+      return total;
     }
   },
   methods: {
@@ -54,6 +55,14 @@ export default {
       if (item.quantity > 0) {
         this.$store.state.cartItem.splice(index, 1, item);
       }
+    },
+    addItem(name) {
+      let index = this.$store.state.cartItem.findIndex(
+        item => item.name == name
+      );
+      let item = this.$store.state.cartItem[index];
+      item.quantity += 1;
+      this.$store.state.cartItem.splice(index, 1, item);
     }
   }
 };

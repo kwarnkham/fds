@@ -49,7 +49,7 @@
             flat
             depressed
             outline
-            color="info"
+            color="grey lighten-1"
             v-if="showMeal"
             @click="showMeal = !showMeal"
           >Hide Meals</v-btn>
@@ -59,8 +59,9 @@
             depressed
             outline
             color="success"
-            @click="submitOrder(name, mobile, address, note)"
+            @click="submit"
             :loading="isLoading"
+            :disabled="isDisabled"
           >Submit Order</v-btn>
         </v-card-actions>
       </v-card>
@@ -125,7 +126,7 @@ export default {
       { text: "Price", value: "price" },
       { text: "Quantity", value: "quantity" },
       { text: "Amount (MMK)", value: "amount" },
-      { text: "Reduce", value: "name", sortable: false }
+      { text: "Action", value: "name", sortable: false }
     ],
     showMeal: false,
     valid: true,
@@ -145,10 +146,19 @@ export default {
   computed: {
     items() {
       return this.$store.state.cartItem;
+    },
+    isDisabled() {
+      if (this.valid == false && this.isLoading == true) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
-
+    submit(){
+      this.submitOrder(this.name, this.mobile, this.address, this.note)
+    }
   }
 };
 </script>

@@ -40,8 +40,9 @@ export default {
     drawerToggler: null,
     items: [
       { title: "Home", icon: "dashboard", to: "/" },
-      { title: "Meal", icon: "question_answer", to: "/meal" },
-      { title: "Checkout", icon: "shopping_cart", to: "/cart" }
+      { title: "Meal", icon: "fastfood", to: "/meal" },
+      { title: "Checkout", icon: "shopping_cart", to: "/cart" },
+      { title: "Order Status", icon: "timeline", to: "/order/status" }
     ]
   }),
   methods: {
