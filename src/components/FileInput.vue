@@ -6,8 +6,8 @@
     <input
       ref="fileInput"
       type="file"
-      name="image"
-      id="image"
+      name="files"
+      id="files"
       accept="image/*"
       multiple
       @change="uploadImage($event)"

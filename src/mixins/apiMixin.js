@@ -133,10 +133,15 @@ export const apiMixin = {
         //add product
         addProduct(name, price, description, files) {
             let formData = new FormData();
-            formData.append('files', files);
+            for (var i = 0; i < files.length; i++) {
+                let file = files[i];
+
+                formData.append('files[' + i + ']', file);
+            }
             formData.set('name', name)
             formData.set('price', price)
             formData.set('description', description)
+
             this.isLoading = true
             axios({
                 method: "post",
@@ -146,7 +151,6 @@ export const apiMixin = {
             })
                 .then(res => {
                     console.log(res);
-                    // this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
                 })
                 .catch(err => {
                     console.log(err.response);
