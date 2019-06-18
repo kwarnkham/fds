@@ -46,8 +46,14 @@
 
           <FileInput @uploadImage="handleImage($event)"/>
           <v-layout row wrap justify-center align-center>
-            <v-flex xs12 lg5 v-for="image in images" :key="image" class="pa-2">
-              <v-img alt="image" contain :src="image"/>
+            <v-flex xs12 lg5 v-for="image in images" :key="image[0]" class="pa-2">
+              <div style="text-align: end;">
+                <v-btn icon color="red" class="d-inline" @click.native="removeUploadImage(image)">
+                  <v-icon>close</v-icon>
+                </v-btn>
+              </div>
+
+              <v-img alt="image" :height="300" contain :src="image[1]"/>
             </v-flex>
           </v-layout>
           <v-btn
@@ -66,6 +72,7 @@
 <script>
 import FileInput from "@/components/FileInput";
 import { apiMixin } from "@/mixins/apiMixin";
+import { setInterval } from "timers";
 export default {
   name: "AddProduct",
   components: {
@@ -87,8 +94,8 @@ export default {
     descriptionRules: [v => !!v || "Description is required"],
     message: "",
     isLoading: false,
-    images: [],
-    files:''
+    files: [],
+    images: []
   }),
   computed: {
     isDisabled() {
@@ -99,6 +106,19 @@ export default {
       }
     }
   },
+  watch: {
+    files(v) {
+      this.images = [];
+      if (v.length > 0) {
+        v.forEach(file => {
+          let reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = reader =>
+            this.images.push([file.name, reader.target.result]);
+        });
+      }
+    }
+  },
   methods: {
     validate() {
       if (this.$refs.addProductForm.validate()) {
@@ -106,15 +126,18 @@ export default {
       }
     },
     handleImage(e) {
-      this.files= e.target.files
-      Array.from(e.target.files).forEach(image => {
-        let reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = reader => {
-          this.images.push(reader.target.result);
-        };
-      });
+      this.files = Array.from(e.target.files);
+    },
+    removeUploadImage(image) {
+      for (var i = 0; i < this.files.length; i++) {
+        if (this.files[i].name == image[0]) {
+          this.files.splice(i, 1);
+        }
+      }
     }
+  },
+  mounted() {
+
   }
 };
 </script>
