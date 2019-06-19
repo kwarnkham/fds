@@ -98,6 +98,7 @@ export const apiMixin = {
             })
                 .then(res => {
                     console.log(res);
+                    store.dispatch('clearCart')
                     this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
                 })
                 .catch(err => {
@@ -122,9 +123,13 @@ export const apiMixin = {
             })
                 .then(res => {
                     console.log(res);
+                    store.dispatch('setTrackedOrder', res.data.order)
+                    if (res.data.message == 'No Order') {
+                        this.$emit('getOrderInfoResponse', res.data.message, 'accent')
+                    }
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    console.log(err);
                 }).finally(() => {
                     this.isLoading = false
                 });

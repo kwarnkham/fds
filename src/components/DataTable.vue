@@ -1,26 +1,23 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="items"
-    class="elevation-1"
-    hide-actions
-    no-data-text="No item"
-    dark
-  >
+  <v-data-table :headers="headers" :items="items" hide-actions no-data-text="No item" dark>
     <template v-slot:items="props">
       <td>{{ props.item.name }}</td>
       <td>{{ props.item.price }}</td>
       <td>{{ props.item.quantity }}</td>
       <td>{{ props.item.amount }}</td>
-      <td>
+      <td v-if="$route.name == 'cart'">
         <v-icon small @click="addItem(props.item.name)" class="mr-4">add</v-icon>
         <v-icon small @click="deleteItem(props.item.name)">remove</v-icon>
       </td>
     </template>
-    <template v-slot:footer v-if="$store.state.cartItem.length > 0">
-      <td :colspan="headers.length -2">
+    <template v-slot:footer>
+      <td :colspan="headers.length -2" v-if="$route.name == 'cart'">
         <strong class="text-xs-right d-block">Total Amount</strong>
       </td>
+      <td :colspan="headers.length -1" v-if="$route.name == 'orderStatus'">
+        <strong class="text-xs-right d-block">Total Amount</strong>
+      </td>
+
       <td>{{totalAmount}} MMK</td>
     </template>
   </v-data-table>
@@ -38,7 +35,12 @@ export default {
   computed: {
     totalAmount() {
       let total = 0;
-      this.$store.state.cartItem.forEach(item => (total += item.amount));
+      if (this.$route.name == "cart") {
+        this.$store.state.cartItem.forEach(item => (total += item.amount));
+      }
+      if (this.$route.name == "orderStatus") {
+        this.$store.getters.trackedOrderItems.forEach(item => (total += item.amount));
+      }
       return total;
     }
   },

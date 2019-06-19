@@ -1,6 +1,6 @@
 <template>
-  <v-layout>
-    <v-flex xs12>
+  <v-layout row wrap justify-center align-content-start>
+    <v-flex xs12 md6>
       <v-card>
         <v-card-title class="title">Order Tracking</v-card-title>
         <v-card-text>You need the order id and you phone number to track the order</v-card-text>
@@ -43,22 +43,62 @@
         </v-form>
       </v-card>
     </v-flex>
+    <v-flex xs12 md6 v-if="$store.state.trackedOrder != null" class="mt-3">
+      <v-layout row wrap class="pl-3 grey darken-2 white--text">
+        <v-flex xs12>
+          Order ID :
+          <strong>{{$store.state.trackedOrder.id}}</strong>
+        </v-flex>
+        <v-flex xs12>
+          Order Status :
+          <strong>{{$store.state.trackedOrder.status}}</strong>
+        </v-flex>
+        <v-flex xs12>
+          Address To Deliver :
+          <strong>{{$store.state.trackedOrder.address}}</strong>
+        </v-flex>
+        <v-flex xs12>
+          Order Note :
+          <strong>{{$store.state.trackedOrder.note}}</strong>
+        </v-flex>
+      </v-layout>
+      <DataTable :headers="tableHeaders" :items="items"/>
+    </v-flex>
+    <SnackBar ref="snackBar" @snackBarClosed="message=''">{{message}}</SnackBar>
   </v-layout>
 </template>
 
 <script>
 import { apiMixin } from "../mixins/apiMixin";
+import DataTable from "@/components/DataTable";
+import SnackBar from "@/components/SnackBar";
 export default {
   name: "OrderStatus",
+  components: {
+    DataTable,
+    SnackBar
+  },
   mixins: [apiMixin],
   data: () => ({
+    message: "",
     isLoading: false,
     valid: false,
     orderId: "",
     mobile: "",
     rules: {
       required: value => !!value || "Required."
-    }
+    },
+    tableHeaders: [
+      {
+        text: "Name",
+        align: "left",
+        sortable: false,
+        value: "name"
+      },
+      { text: "Price", value: "price" },
+      { text: "Quantity", value: "quantity" },
+      { text: "Amount (MMK)", value: "amount" }
+    ]
   }),
   methods: {
     submit() {
@@ -74,6 +114,9 @@ export default {
       } else {
         return false;
       }
+    },
+    items() {
+      return this.$store.getters.trackedOrderItems;
     }
   },
   mounted() {
@@ -84,9 +127,18 @@ export default {
     this.$route.query.mobile == undefined
       ? (this.mobile = "")
       : (this.mobile = this.$route.query.mobile);
+
+    this.$on("getOrderInfoResponse", (message, status) => {
+      this.message = message;
+      this.$refs.snackBar.toggleSnackBar(true, status);
+    });
   }
 };
 </script>
+
+<style scoped>
+</style>
+
 
 
 
