@@ -59,7 +59,7 @@
             depressed
             outline
             color="success"
-            @click="submit"
+            @click="validate"
             :loading="isLoading"
             :disabled="isDisabled"
           >Submit Order</v-btn>
@@ -70,7 +70,7 @@
       <v-flex xs12 sm6 md4 v-for="meal in $store.state.cartItem" :key="meal.name">
         <MealComponent>
           <template v-slot:image>
-            <v-img height="300px" :src="meal.picture" contain></v-img>
+            <v-img height="300px" :src="$store.state.baseUrl+meal.product_pictures[0].name" contain></v-img>
           </template>
           <template v-slot:title>
             <span>Name: {{meal.name}}</span>
@@ -148,7 +148,7 @@ export default {
       return this.$store.state.cartItem;
     },
     isDisabled() {
-      if (this.valid == false && this.isLoading == true) {
+      if (this.valid == false || this.isLoading == true) {
         return true;
       } else {
         return false;
@@ -156,8 +156,13 @@ export default {
     }
   },
   methods: {
-    submit(){
-      this.submitOrder(this.name, this.mobile, this.address, this.note)
+    submit() {
+      this.submitOrder(this.name, this.mobile, this.address, this.note);
+    },
+    validate() {
+      if (this.$refs.form.validate()) {
+        this.submit();
+      }
     }
   }
 };

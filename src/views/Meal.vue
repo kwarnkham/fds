@@ -3,7 +3,7 @@
     <v-flex xs12 sm6 md4 v-for="meal in meals" :key="meal.name">
       <MealComponent>
         <template v-slot:image>
-          <v-img height="300px" :src="meal.picture" contain></v-img>
+          <v-img height="300px" :src="$store.state.baseUrl+meal.product_pictures[0].name" contain></v-img>
         </template>
         <template v-slot:title>
           <span>{{meal.name}}</span>
@@ -31,6 +31,7 @@
 
 <script>
 import { mealComponentMixin } from "@/mixins/mealComponentMixin";
+import { apiMixin } from "@/mixins/apiMixin";
 import MealComponent from "../components/MealComponent";
 import MealDetail from "../components/MealDetail";
 import FullScreenDialog from "../components/FullScreenDialog";
@@ -46,63 +47,16 @@ export default {
     // LoginComponent,
     // ToAddToCart
   },
-  mixins: [mealComponentMixin],
+  mixins: [mealComponentMixin, apiMixin],
   data: () => ({
-    meals: [
-      {
-        picture: require("@/assets/food1.jpg"),
-        name: "food1",
-        price: 1000,
-        id: 1
-      },
-      {
-        picture: require("@/assets/food2.jpg"),
-        name: "food2",
-        price: 1000,
-        id: 2
-      },
-      {
-        picture: require("@/assets/food3.jpg"),
-        name: "food3",
-        price: 1000,
-        id: 3
-      },
-      {
-        picture: require("@/assets/food4.jpg"),
-        name: "food4",
-        price: 1000,
-        id: 4
-      },
-      {
-        picture: require("@/assets/food5.jpg"),
-        name: "food5",
-        price: 1000,
-        id: 5
-      },
-      {
-        picture: require("@/assets/food6.jpg"),
-        name: "food6",
-        price: 1000,
-        id: 6
-      },
-      {
-        picture: require("@/assets/food7.jpg"),
-        name: "food7",
-        price: 1000,
-        id: 7
-      },
-      {
-        picture: require("@/assets/food8.jpg"),
-        name: "food8",
-        price: 1000,
-        id: 8
-      }
-    ]
   }),
   computed: {
     // isLogin() {
     //   return this.$store.state.token == null ? false : true;
     // }
+    meals(){
+      return this.$store.state.allMeals
+    }
   },
   watch: {
     // isLogin(status) {
@@ -115,6 +69,9 @@ export default {
     addToCart(meal) {
       this.$store.dispatch("addToCart", meal);
     }
+  },
+  mounted(){
+    this.getProducts();
   }
 };
 </script>

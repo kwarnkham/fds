@@ -6,9 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     apiBaseUrl: 'http://127.0.0.1:8000/api',
+    baseUrl:'http://127.0.0.1:8000/',
     token: null,
     mealDetail: {},
     cartItem: [],
+    allMeals: []
   },
   mutations: {
     // setToken: (state, payload) => {
@@ -31,12 +33,15 @@ export default new Vuex.Store({
         state.cartItem.splice(index, 1, payload);
       }
       if (state.cartItem.findIndex(order => order.name == payload.name) == -1) {
-        payload.quantity= 1;
+        payload.quantity = 1;
         payload.amount = payload.quantity * payload.price;
         state.cartItem.push(payload);
       }
       state.mealDetail = {}
     },
+    setAllMeals: (state, payload) => {
+      state.allMeals = payload
+    }
   },
   actions: {
     // setToken: (context, payload) => {
@@ -51,5 +56,8 @@ export default new Vuex.Store({
     addToCart: (context, payload) => {
       context.commit('addToCart', payload)
     },
+    setAllMeals: (context, payload) => {
+      context.commit('setAllMeals', payload)
+    }
   }
 })

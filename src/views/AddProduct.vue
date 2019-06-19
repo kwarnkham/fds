@@ -63,6 +63,7 @@
             block
             :loading="isLoading"
           >Add</v-btn>
+          <SnackBar ref="snackBar" @snackBarClosed="message=''">{{message}}</SnackBar>
         </v-form>
       </v-card>
     </v-flex>
@@ -72,11 +73,13 @@
 <script>
 import FileInput from "@/components/FileInput";
 import { apiMixin } from "@/mixins/apiMixin";
-import { setInterval } from "timers";
+import SnackBar from "@/components/SnackBar";
+
 export default {
   name: "AddProduct",
   components: {
-    FileInput
+    FileInput,
+    SnackBar
   },
   mixins: [apiMixin],
   data: () => ({
@@ -137,7 +140,12 @@ export default {
     }
   },
   mounted() {
-
+    this.$on("addProductResponse", (message, status) => {
+      this.message = message;
+      this.$refs.snackBar.toggleSnackBar(true, status);
+      this.$refs.addProductForm.reset();
+      this.files = [];
+    });
   }
 };
 </script>

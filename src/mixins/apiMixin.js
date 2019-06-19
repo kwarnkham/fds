@@ -132,6 +132,7 @@ export const apiMixin = {
 
         //add product
         addProduct(name, price, description, files) {
+            this.isLoading = true;
             let formData = new FormData();
             for (var i = 0; i < files.length; i++) {
                 let file = files[i];
@@ -142,7 +143,6 @@ export const apiMixin = {
             formData.set('price', price)
             formData.set('description', description)
 
-            this.isLoading = true
             axios({
                 method: "post",
                 url: `/product/create`,
@@ -150,7 +150,10 @@ export const apiMixin = {
                 data: formData
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
+                    if (res.status == "200") {
+                        this.$emit('addProductResponse', res.data.message, 'success')
+                    }
                 })
                 .catch(err => {
                     console.log(err.response);
@@ -159,5 +162,20 @@ export const apiMixin = {
                 });
 
         },
+        //get products
+        getProducts() {
+            axios({
+                method: "get",
+                url: `/product/index`,
+                headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
+            })
+                .then(res => {
+                    // console.log(res);
+                    store.dispatch('setAllMeals', res.data.products)
+                })
+                .catch(err => {
+                    console.log(err.response);
+                })
+        }
     }
 }
