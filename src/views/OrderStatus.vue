@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap justify-center align-content-start>
-    <v-flex xs12 md6>
+    <v-flex xs12 md7>
       <v-card>
         <v-card-title class="title">Order Tracking</v-card-title>
         <v-card-text>You need the order id and you phone number to track the order</v-card-text>
@@ -103,7 +103,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.getOrderInfoForm.validate()) {
-        this.getOrderInfo(this.orderId, this.mobile);
+        this.trackOrder(this.orderId, this.mobile);
       }
     }
   },

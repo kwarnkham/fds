@@ -44,6 +44,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "add_product" */ './views/AddProduct.vue'),
     },
     {
+      path: '/order/manage',
+      name: 'manageOrder',
+      component: () => import(/* webpackChunkName: "add_product" */ './views/OrderManagement.vue'),
+    },
+    {
       path: '/test',
       name: 'test',
       component: () => import(/* webpackChunkName: "meal" */ './views/Test.vue')

@@ -7,11 +7,15 @@
       <td>{{ props.item.amount }}</td>
       <td v-if="$route.name == 'cart'">
         <v-icon small @click="addItem(props.item.name)" class="mr-4">add</v-icon>
+        <!-- <v-icon small @click="deleteItem(props.item.name)">remove</v-icon> -->
+      </td>
+      <td v-if="$route.name == 'cart'">
+        <!-- <v-icon small @click="addItem(props.item.name)" class="mr-4">add</v-icon> -->
         <v-icon small @click="deleteItem(props.item.name)">remove</v-icon>
       </td>
     </template>
     <template v-slot:footer>
-      <td :colspan="headers.length -2" v-if="$route.name == 'cart'">
+      <td :colspan="headers.length -3" v-if="$route.name == 'cart'">
         <strong class="text-xs-right d-block">Total Amount</strong>
       </td>
       <td :colspan="headers.length -1" v-if="$route.name == 'orderStatus'">

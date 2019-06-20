@@ -110,11 +110,11 @@ export const apiMixin = {
         },
 
         //get order info
-        getOrderInfo(orderId, mobile) {
+        trackOrder(orderId, mobile) {
             this.isLoading = true
             axios({
                 method: "get",
-                url: `/order`,
+                url: `/order/track`,
                 headers: { 'Authorization': 'Bearer ' + store.state.token },
                 params: {
                     order_id: orderId,
@@ -181,6 +181,37 @@ export const apiMixin = {
                 .catch(err => {
                     console.log(err.response);
                 })
+        },
+        //get all orders
+        getAllOrders() {
+            axios({
+                method: "get",
+                url: '/order/index',
+                headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
+            })
+                .then(res => store.dispatch('setAllOrders', res.data.orders))
+                .catch(err => console.log(err));
+        },
+
+        //show an order
+        getAnOrder(id) {
+            axios({
+                method: "get",
+                url: `/order/show`,
+                headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
+                params: {
+                    order_id: id
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                    this.order = res.data.order
+                })
+                .catch(err => {
+                    console.log(err.response);
+                }).finally(() => {
+                    // this.isLoading = false
+                });
         }
     }
 }

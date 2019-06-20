@@ -126,7 +126,8 @@ export default {
       { text: "Price", value: "price" },
       { text: "Quantity", value: "quantity" },
       { text: "Amount (MMK)", value: "amount" },
-      { text: "Action", value: "name", sortable: false }
+      { text: "Add", value: "name", sortable: false },
+      { text: "Remove", value: "name", sortable: false }
     ],
     showMeal: false,
     valid: true,

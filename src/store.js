@@ -11,7 +11,8 @@ export default new Vuex.Store({
     mealDetail: {},
     cartItem: [],
     allMeals: [],
-    trackedOrder: null
+    trackedOrder: null,
+    allOrders: []
   },
   getters: {
     trackedOrderItems: state => {
@@ -69,6 +70,9 @@ export default new Vuex.Store({
     },
     clearCart: (state) => {
       state.cartItem = []
+    },
+    setAllOrders: (state, payload) => {
+      state.allOrders = payload
     }
   },
   actions: {
@@ -92,6 +96,9 @@ export default new Vuex.Store({
     },
     clearCart: (context) => {
       context.commit('clearCart')
+    },
+    setAllOrders: (context, payload) => {
+      context.commit('setAllOrders', payload)
     }
   }
 })
