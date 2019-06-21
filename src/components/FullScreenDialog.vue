@@ -7,12 +7,15 @@
     lazy
     class="grey lighten-3"
   >
+    <v-toolbar app flat class="white">
+      <v-spacer></v-spacer>
+      <v-btn class="ma-0 grey darken-3" depressed icon @click="dialog = false">
+        <v-icon color="white">close</v-icon>
+      </v-btn>
+    </v-toolbar>
     <v-card style="height:100%;">
-      <v-layout justify-center row wrap>
-        <v-flex xs12 class="grey darken-3">
-          <v-btn class="ma-0 grey darken-3" depressed block @click="dialog = false"><v-icon color="white">close</v-icon></v-btn>
-        </v-flex>
-        <v-flex xs12 md6>
+      <v-layout row wrap>
+        <v-flex xs12>
           <slot></slot>
         </v-flex>
       </v-layout>

@@ -13,7 +13,7 @@
       <p>Price: {{$store.state.mealDetail.price}} MMK</p>
       <p>Description: {{$store.state.mealDetail.description}}</p>
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions v-if="$route.name != 'manageOrder'">
       <v-btn outline color="success" block @click.native="addToCart">
         <v-icon color="success" class="pr-2">add_shopping_cart</v-icon>Add to Cart
       </v-btn>

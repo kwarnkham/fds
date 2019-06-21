@@ -212,6 +212,24 @@ export const apiMixin = {
                 }).finally(() => {
                     // this.isLoading = false
                 });
+        },
+
+        updateOrder(id) {
+            this.$refs.loading.trigger(true)
+            axios({
+                method: 'post',
+                url: '/order/update',
+                headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
+                params: {
+                    order_id: id,
+                    action: 'confirm'
+                }
+            }).then(res => {
+                if (res.data.message == 'OK') {
+                    this.getAllOrders()
+                }
+                this.$refs.loading.trigger(false)
+            }).catch(err => console.log(err.response))
         }
     }
 }
