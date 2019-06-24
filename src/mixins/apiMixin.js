@@ -190,7 +190,7 @@ export const apiMixin = {
                 headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
             })
                 .then(res => store.dispatch('setAllOrders', res.data.orders))
-                // .catch(err => console.log(err));
+            // .catch(err => console.log(err));
         },
 
         //show an order
@@ -230,7 +230,9 @@ export const apiMixin = {
                     this.getAllOrders()
                 }
                 this.$refs.loading.trigger(false)
-            // }).catch(err => console.log(err.response))
+            }).catch(err => {
+                // console.log(err.response)
+            })
         }
     }
 }
