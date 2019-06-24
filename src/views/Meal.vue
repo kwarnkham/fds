@@ -1,5 +1,5 @@
 <template>
-  <v-layout align-center justify-center row wrap>
+  <v-layout row wrap>
     <v-flex xs12 sm6 md4 v-for="meal in meals" :key="meal.name">
       <MealComponent>
         <template v-slot:image>

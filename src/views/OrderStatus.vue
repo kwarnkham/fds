@@ -128,6 +128,10 @@ export default {
       ? (this.mobile = "")
       : (this.mobile = this.$route.query.mobile);
 
+    if (this.$route.query.order_id != undefined) {
+      this.trackOrder(this.orderId, this.mobile);
+    }
+
     this.$on("getOrderInfoResponse", (message, status) => {
       this.message = message;
       this.$refs.snackBar.toggleSnackBar(true, status);

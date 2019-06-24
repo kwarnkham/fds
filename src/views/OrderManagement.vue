@@ -14,22 +14,45 @@
           <td>{{ props.item.status }}</td>
           <!-- confirm -->
           <td>
-            <v-btn icon class="info" :disabled="props.item.status =='confirmed'">
-              <v-icon @click.native="confirmOrder(props.item.id)">play_for_work</v-icon>
-            </v-btn>
-          </td>
-          <td>
-            <v-btn icon class="teal">
+            <v-btn
+              icon
+              class="info"
+              :disabled="disableConfirm(props.item.status)"
+              @click.native="confirmOrder(props.item.id)"
+            >
               <v-icon>play_for_work</v-icon>
             </v-btn>
           </td>
+          <!-- deliver -->
           <td>
-            <v-btn icon class="error">
+            <v-btn
+              icon
+              class="teal"
+              @click.native="deliverOrder(props.item.id)"
+              :disabled="disableDeliver(props.item.status)"
+            >
               <v-icon>play_for_work</v-icon>
             </v-btn>
           </td>
+          <!-- cancel -->
           <td>
-            <v-btn icon class="success">
+            <v-btn
+              icon
+              class="error"
+              :disabled="disableCancel(props.item.status)"
+              @click.native="cancelOrder(props.item.id)"
+            >
+              <v-icon>play_for_work</v-icon>
+            </v-btn>
+          </td>
+          <!-- complete -->
+          <td>
+            <v-btn
+              icon
+              class="success"
+              :disabled="disableComplete(props.item.status)"
+              @click.native="cancelOrder(props.item.id)"
+            >
               <v-icon>play_for_work</v-icon>
             </v-btn>
           </td>
@@ -124,12 +147,49 @@ export default {
     }
   },
   methods: {
+    disableConfirm(status) {
+      if (status != "unconfirmed") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    disableDeliver(status) {
+      if (status != "confirmed") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    disableCancel(status) {
+      if (status == "canceled" || status == "completed") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    disableComplete(status) {
+      if (status != "delivered") {
+        return true;
+      } else {
+        return false;
+      }
+    },
     showOrderDetail(id) {
       this.$refs.FullScreenDialog.toggleDialog(true);
       this.getAnOrder(id);
     },
     confirmOrder(id) {
-      this.updateOrder(id);
+      this.updateOrder(id, "confirm");
+    },
+    deliverOrder(id) {
+      this.updateOrder(id, "deliver");
+    },
+    cancelOrder(id) {
+      this.updateOrder(id, "cancel");
+    },
+    completeOrder(id) {
+      this.updateOrder(id, "complete");
     }
   },
   created() {

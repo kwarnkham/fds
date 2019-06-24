@@ -19,14 +19,14 @@ export const apiMixin = {
                 }
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     if (res.status == "200") {
                         this.$emit('registerResponse', res.data.message, 'success')
                         store.dispatch("setToken", res.data.token);
                     }
                 })
                 .catch(err => {
-                    console.log(err.response)
+                    // console.log(err.response)
                     let apiMessage = ''
                     for (let key in err.response.data.errors) {
                         apiMessage += ` ${err.response.data.errors[key]}`;
@@ -47,7 +47,7 @@ export const apiMixin = {
                 }
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     if (res.data.token == undefined) {
                         this.$emit('loginResponse', res.data.message, 'error')
                     } else {
@@ -56,7 +56,7 @@ export const apiMixin = {
                     }
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    // console.log(err.response);
                     let apiMessage = ''
                     for (let key in err.response.data.errors) {
                         apiMessage += ` ${err.response.data.errors[key]}`;
@@ -72,10 +72,10 @@ export const apiMixin = {
                 headers: { 'Authorization': 'Bearer ' + store.state.token }
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    // console.log(err.response);
                 }).finally(() => {
                     store.dispatch("removeToken");
                     this.$router.push("/");
@@ -97,12 +97,12 @@ export const apiMixin = {
                 }
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     store.dispatch('clearCart')
                     this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    // console.log(err.response);
                 }).finally(() => {
                     this.isLoading = false
                 });
@@ -122,14 +122,14 @@ export const apiMixin = {
                 },
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     store.dispatch('setTrackedOrder', res.data.order)
                     if (res.data.message == 'No Order') {
                         this.$emit('getOrderInfoResponse', res.data.message, 'accent')
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                 }).finally(() => {
                     this.isLoading = false
                 });
@@ -161,7 +161,7 @@ export const apiMixin = {
                     }
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    // console.log(err.response);
                 }).finally(() => {
                     this.isLoading = false
                 });
@@ -179,7 +179,7 @@ export const apiMixin = {
                     store.dispatch('setAllMeals', res.data.products)
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    // console.log(err.response);
                 })
         },
         //get all orders
@@ -190,7 +190,7 @@ export const apiMixin = {
                 headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
             })
                 .then(res => store.dispatch('setAllOrders', res.data.orders))
-                .catch(err => console.log(err));
+                // .catch(err => console.log(err));
         },
 
         //show an order
@@ -204,32 +204,33 @@ export const apiMixin = {
                 }
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.order = res.data.order
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    // console.log(err.response);
                 }).finally(() => {
                     // this.isLoading = false
                 });
         },
 
-        updateOrder(id) {
+        updateOrder(id, action) {
             this.$refs.loading.trigger(true)
+            // console.log(action)
             axios({
                 method: 'post',
                 url: '/order/update',
                 headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
                 params: {
                     order_id: id,
-                    action: 'confirm'
+                    action: action
                 }
             }).then(res => {
                 if (res.data.message == 'OK') {
                     this.getAllOrders()
                 }
                 this.$refs.loading.trigger(false)
-            }).catch(err => console.log(err.response))
+            // }).catch(err => console.log(err.response))
         }
     }
 }
