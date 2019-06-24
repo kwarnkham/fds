@@ -36,17 +36,17 @@ export default new Router({
     {
       path: '/order/status',
       name: 'orderStatus',
-      component: () => import(/* webpackChunkName: "order_status" */ './views/OrderStatus.vue'),
+      component: () => import(/* webpackChunkName: "orderStatus" */ './views/OrderStatus.vue'),
     },
     {
       path: '/product/add',
       name: 'addProduct',
-      component: () => import(/* webpackChunkName: "add_product" */ './views/AddProduct.vue'),
+      component: () => import(/* webpackChunkName: "addProduct" */ './views/AddProduct.vue'),
     },
     {
       path: '/order/manage',
       name: 'manageOrder',
-      component: () => import(/* webpackChunkName: "manage_order" */ './views/OrderManagement.vue'),
+      component: () => import(/* webpackChunkName: "manageOrder" */ './views/OrderManagement.vue'),
     },
     // {
     //   path: '/test',

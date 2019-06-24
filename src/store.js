@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     apiBaseUrl: 'http://127.0.0.1:8000/api',
     baseUrl: 'http://127.0.0.1:8000/',
+    // apiBaseUrl: 'https://foodds.ml/api',
+    // baseUrl: 'https://foodds.ml/',
     token: null,
     mealDetail: {},
     cartItem: [],
