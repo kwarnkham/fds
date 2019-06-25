@@ -51,18 +51,31 @@ export default new Vuex.Store({
     },
     addToCart: (state, payload) => {
       if (state.cartItem.findIndex(order => order.name == payload.name) != -1) {
-        let index = state.cartItem.findIndex(order => order.name == payload.name);
-        let quantity = state.cartItem[index].quantity + 1;
-        payload.quantity = quantity
-        payload.amount = payload.quantity * payload.price
-        state.cartItem.splice(index, 1, payload);
+        console.log('existed')
       }
       if (state.cartItem.findIndex(order => order.name == payload.name) == -1) {
-        payload.quantity = 1;
-        payload.amount = payload.quantity * payload.price;
-        state.cartItem.push(payload);
+        state.cartItem.push(payload)
       }
-      state.mealDetail = {}
+      // if (state.cartItem.findIndex(order => order.name == payload.name) != -1) {
+      // let index = state.cartItem.findIndex(order => order.name == payload.name);
+      // console.log(payload)
+      // let quantity = state.cartItem[index].quantity + payload.quantity
+      // payload.quantity = quantity
+      // console.log(payload)
+      // state.cartItem[index].quantity += payload.quantity
+      // let quantity = state.cartItem[index].quantity + payload.quantity;
+      // payload.quantity = quantity
+      // // console.log(`new qty is ${payload.quantity} and old qty is ${state.cartItem[index].quantity}`)
+      // payload.amount = payload.quantity * payload.price
+      // state.cartItem.splice(index, 1, payload);
+
+      // }
+
+      // if (state.cartItem.findIndex(order => order.name == payload.name) == -1) {
+      //   state.cartItem.push(payload);
+      // }
+
+      // state.mealDetail = {}
     },
     setAllMeals: (state, payload) => {
       state.allMeals = payload
@@ -88,6 +101,7 @@ export default new Vuex.Store({
       context.commit('setMealDetail', payload)
     },
     addToCart: (context, payload) => {
+      // console.log(payload)
       context.commit('addToCart', payload)
     },
     setAllMeals: (context, payload) => {

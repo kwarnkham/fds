@@ -6,7 +6,11 @@
       <p class="font-weight-bold title">Meal Details</p>
     </v-card-title>
     <v-carousel>
-      <v-carousel-item v-for="( item ,i) in pictures" :key="i" :src="$store.state.baseUrl+item.name"></v-carousel-item>
+      <v-carousel-item
+        v-for="( item ,i) in pictures"
+        :key="i"
+        :src="$store.state.baseUrl+item.name"
+      ></v-carousel-item>
     </v-carousel>
     <v-card-text>
       <p>Name: {{$store.state.mealDetail.name}}</p>
@@ -18,15 +22,20 @@
         <v-icon color="success" class="pr-2">add_shopping_cart</v-icon>Add to Cart
       </v-btn>
     </v-card-actions>
+    <AddingToCartFormDialog ref="addingToCartFormDialog"/>
   </v-card>
   <!-- </v-flex>
   </v-layout>-->
 </template>
 
 <script>
+import AddingToCartFormDialog from "@/components/AddingToCartFormDialog";
 export default {
   name: "MealDetail",
   data: () => ({}),
+  components: {
+    AddingToCartFormDialog
+  },
   computed: {
     pictures() {
       return this.$store.state.mealDetail.product_pictures;
@@ -34,7 +43,8 @@ export default {
   },
   methods: {
     addToCart() {
-      this.$store.dispatch("addToCart", this.$store.state.mealDetail);
+      this.$refs.addingToCartFormDialog.showAddingToCartForm = true;
+      this.$refs.addingToCartFormDialog.addingMeal = this.$store.state.mealDetail;
       this.$emit("closeFullScreenDialog");
     }
   },

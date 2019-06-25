@@ -8,6 +8,7 @@
     <v-card-text>
       <slot name="price"></slot>
       <slot name="qty"></slot>
+      <slot name="note"></slot>
     </v-card-text>
     <v-card-actions align-content-space-between>
       <slot></slot>

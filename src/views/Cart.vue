@@ -44,7 +44,7 @@
             color="accent"
             v-if="!showMeal"
             @click="showMeal = !showMeal"
-          >Show Meals</v-btn>
+          >Show Details</v-btn>
           <v-btn
             flat
             depressed
@@ -52,7 +52,7 @@
             color="grey lighten-1"
             v-if="showMeal"
             @click="showMeal = !showMeal"
-          >Hide Meals</v-btn>
+          >Hide Details</v-btn>
           <v-spacer></v-spacer>
           <v-btn
             flat
@@ -80,6 +80,9 @@
           </template>
           <template v-slot:qty>
             <p>Quantity: {{meal.quantity}}</p>
+          </template>
+          <template v-slot:note>
+            <p>Note: {{meal.note}}</p>
           </template>
 
           <!-- <v-btn flat class="success" @click.native="addToCart(meal)">
