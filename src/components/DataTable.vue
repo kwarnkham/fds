@@ -43,7 +43,9 @@ export default {
         this.$store.state.cartItem.forEach(item => (total += item.amount));
       }
       if (this.$route.name == "orderStatus") {
-        this.$store.getters.trackedOrderItems.forEach(item => (total += item.amount));
+        this.$store.getters.trackedOrderItems.forEach(
+          item => (total += item.amount)
+        );
       }
       return total;
     }
@@ -55,6 +57,7 @@ export default {
       );
       let item = this.$store.state.cartItem[index];
       item.quantity -= 1;
+      item.amount = item.price * item.quantity;
       if (item.quantity <= 0) {
         this.$store.state.cartItem.splice(index, 1);
       }
@@ -68,6 +71,7 @@ export default {
       );
       let item = this.$store.state.cartItem[index];
       item.quantity += 1;
+      item.amount = item.price * item.quantity;
       this.$store.state.cartItem.splice(index, 1, item);
     }
   }
