@@ -69,11 +69,8 @@ export default {
   },
   methods: {
     addToCart(meal) {
-      if (meal.quantity == undefined) {
-        meal.quantity = 1;
-      }
-      console.log(meal);
-      this.$refs.addingToCartFormDialog.toggleDialog(true, meal);
+      this.$refs.addingToCartFormDialog.toggleDialog(true);
+      this.$refs.addingToCartFormDialog.setAddingMeal(meal);
     }
   },
   mounted() {

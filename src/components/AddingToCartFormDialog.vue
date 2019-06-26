@@ -40,54 +40,65 @@ export default {
   name: "AddingToCartFormDialog",
   data: () => ({
     showAddingToCartForm: false,
-    addingMeal: {}
+    addingMeal: {},
+    addingQty: 1,
+    addingNote: ""
   }),
   computed: {
     cartItem() {
       return this.$store.state.cartItem;
     },
     amount() {
-      return this.addingMeal.quantity * this.addingMeal.price;
+      return this.addingQty * this.addingMeal.price;
     }
   },
   methods: {
     updateQty(action) {
-      if (action == "up") this.addingMeal.quantity++;
-      if (action == "down") this.addingMeal.quantity--;
+      if (action == "up") {
+        this.$set(this.addingMeal, "quantity", this.addingMeal.quantity + 1);
+      }
+      if (action == "down") {
+        this.$set(this.addingMeal, "quantity", this.addingMeal.quantity - 1);
+      }
     },
+
     adding() {
-      if (
-        this.cartItem.findIndex(order => order.name == this.addingMeal.name) !=
-        -1
-      ) {
-        let index = this.cartItem.findIndex(
-          order => order.name == this.addingMeal.name
+      this.$nextTick(() => {
+        this.$set(
+          this.addingMeal,
+          "amount",
+          this.addingMeal.price * this.addingMeal.quantity
         );
-        let quantity = this.cartItem[index].quantity + this.addingMeal.quantity;
-        console.log(this.cartItem[index].quantity + "cart");
-        console.log(this.addingMeal.quantity + "adding");
-      }
-
-      //new item to cart
-      if (
-        this.cartItem.findIndex(order => order.name == this.addingMeal.name) ==
-        -1
-      ) {
-        this.addingMeal.amount = this.amount;
+        console.log(this.addingMeal);
         this.$store.dispatch("addToCart", this.addingMeal);
-      }
-
-      this.showAddingToCartForm = false;
-
-      this.addingMeal = {};
+        this.showAddingToCartForm = false;
+      });
     },
     cancelAdding() {
       this.showAddingToCartForm = false;
       this.addingMeal = {};
+      this.addingQty = 1;
+      this.addingNote = "";
     },
-    toggleDialog(status, payload) {
+    toggleDialog(status) {
       this.showAddingToCartForm = status;
-      this.addingMeal = payload;
+    },
+    setAddingMeal(meal) {
+      //old
+      if (this.cartItem.findIndex(order => order.id == meal.id) != -1) {
+        let index = this.cartItem.findIndex(order => order.id == meal.id);
+        this.addingMeal = Object.assign({}, this.cartItem[index]);
+      }
+
+      //new
+      if (this.cartItem.findIndex(order => order.id == meal.id) == -1) {
+        this.addingMeal = Object.assign({}, this.addingMeal, meal, {
+          quantity: 1,
+          note: ""
+        });
+      }
+
+      // this.addingMeal = "Object.create(meal)";
     }
   }
 };

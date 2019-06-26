@@ -50,12 +50,17 @@ export default new Vuex.Store({
       state.mealDetail = payload
     },
     addToCart: (state, payload) => {
-      if (state.cartItem.findIndex(order => order.name == payload.name) != -1) {
-        console.log('existed')
+      //already existed
+      if (state.cartItem.findIndex(order => order.id == payload.id) != -1) {
+        let index = state.cartItem.findIndex(order => order.id == payload.id)
+        state.cartItem.splice(index, 1, payload)
       }
-      if (state.cartItem.findIndex(order => order.name == payload.name) == -1) {
-        state.cartItem.push(payload)
+      //new
+      if (state.cartItem.findIndex(order => order.id == payload.id) == -1) {
+        state.cartItem.push(Object.assign({}, payload));
       }
+
+
       // if (state.cartItem.findIndex(order => order.name == payload.name) != -1) {
       // let index = state.cartItem.findIndex(order => order.name == payload.name);
       // console.log(payload)
