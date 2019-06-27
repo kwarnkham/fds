@@ -90,11 +90,11 @@ export const apiMixin = {
                 }
             })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     store.dispatch('clearCart')
                     this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
                     this.isLoading = false
-                }).catch(err => console.log(err.response))
+                })
 
 
         },
@@ -194,7 +194,7 @@ export const apiMixin = {
 
         updateOrder(id, action) {
             this.$refs.loading.trigger(true)
-            console.log(action)
+            // console.log(action)
             axios({
                 method: 'post',
                 url: '/order/update',
@@ -208,8 +208,8 @@ export const apiMixin = {
                     this.getAllOrders()
                 }
                 this.$refs.loading.trigger(false)
-            }).catch(err => {
-                console.log(err.response)
+            }).catch(() => {
+                // console.log(err.response)
             })
         },
 
