@@ -59,28 +59,6 @@ export default new Vuex.Store({
       if (state.cartItem.findIndex(order => order.id == payload.id) == -1) {
         state.cartItem.push(Object.assign({}, payload));
       }
-
-
-      // if (state.cartItem.findIndex(order => order.name == payload.name) != -1) {
-      // let index = state.cartItem.findIndex(order => order.name == payload.name);
-      // console.log(payload)
-      // let quantity = state.cartItem[index].quantity + payload.quantity
-      // payload.quantity = quantity
-      // console.log(payload)
-      // state.cartItem[index].quantity += payload.quantity
-      // let quantity = state.cartItem[index].quantity + payload.quantity;
-      // payload.quantity = quantity
-      // // console.log(`new qty is ${payload.quantity} and old qty is ${state.cartItem[index].quantity}`)
-      // payload.amount = payload.quantity * payload.price
-      // state.cartItem.splice(index, 1, payload);
-
-      // }
-
-      // if (state.cartItem.findIndex(order => order.name == payload.name) == -1) {
-      //   state.cartItem.push(payload);
-      // }
-
-      // state.mealDetail = {}
     },
     setAllMeals: (state, payload) => {
       state.allMeals = payload

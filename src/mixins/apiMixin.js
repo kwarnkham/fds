@@ -70,19 +70,13 @@ export const apiMixin = {
                 method: "post",
                 url: `/api_token/destroy`,
                 headers: { 'Authorization': 'Bearer ' + store.state.token }
-            })
-                .then(res => {
-                    // console.log(res);
-                })
-                .catch(err => {
-                    // console.log(err.response);
-                }).finally(() => {
-                    store.dispatch("removeToken");
-                    this.$router.push("/");
-                });
+            }).finally(() => {
+                store.dispatch("removeToken");
+                this.$router.push("/");
+            });
         },
         //submitOrder
-        submitOrder(name, mobile, address, note) {
+        submitOrder(name, mobile, address) {
             this.isLoading = true
             axios({
                 method: "post",
@@ -92,20 +86,16 @@ export const apiMixin = {
                     name: name,
                     mobile: mobile,
                     address: address,
-                    note: note,
                     cartItem: store.state.cartItem
                 }
             })
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
                     store.dispatch('clearCart')
                     this.$router.push(`/order/status?order_id=${res.data.order_id}&mobile=${mobile}`)
-                })
-                .catch(err => {
-                    // console.log(err.response);
-                }).finally(() => {
                     this.isLoading = false
-                });
+                }).catch(err => console.log(err.response))
+
 
         },
 
@@ -127,12 +117,9 @@ export const apiMixin = {
                     if (res.data.message == 'No Order') {
                         this.$emit('getOrderInfoResponse', res.data.message, 'accent')
                     }
-                })
-                .catch(err => {
-                    // console.log(err);
-                }).finally(() => {
                     this.isLoading = false
-                });
+                })
+
         },
 
         //add product
@@ -159,12 +146,8 @@ export const apiMixin = {
                     if (res.status == "200") {
                         this.$emit('addProductResponse', res.data.message, 'success')
                     }
-                })
-                .catch(err => {
-                    // console.log(err.response);
-                }).finally(() => {
                     this.isLoading = false
-                });
+                })
 
         },
         //get products
@@ -178,9 +161,6 @@ export const apiMixin = {
                     // console.log(res);
                     store.dispatch('setAllMeals', res.data.products)
                 })
-                .catch(err => {
-                    // console.log(err.response);
-                })
         },
         //get all orders
         getAllOrders() {
@@ -189,7 +169,9 @@ export const apiMixin = {
                 url: '/order/index',
                 headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
             })
-                .then(res => store.dispatch('setAllOrders', res.data.orders))
+                .then(res => {
+                    store.dispatch('setAllOrders', res.data.orders)
+                })
             // .catch(err => console.log(err));
         },
 
@@ -205,18 +187,14 @@ export const apiMixin = {
             })
                 .then(res => {
                     // console.log(res);
-                    this.order = res.data.order
+                    // this.order = res.data.order
+                    this.order = Object.assign({}, this.order, res.data.order)
                 })
-                .catch(err => {
-                    // console.log(err.response);
-                }).finally(() => {
-                    // this.isLoading = false
-                });
         },
 
         updateOrder(id, action) {
             this.$refs.loading.trigger(true)
-            // console.log(action)
+            console.log(action)
             axios({
                 method: 'post',
                 url: '/order/update',
@@ -231,7 +209,27 @@ export const apiMixin = {
                 }
                 this.$refs.loading.trigger(false)
             }).catch(err => {
-                // console.log(err.response)
+                console.log(err.response)
+            })
+        },
+
+        updateAdminNote(id, note) {
+            this.$refs.loading.trigger(true)
+            axios({
+                method: 'post',
+                url: '/order/update_admin_note',
+                headers: { 'Authorization': 'Bearer ' + store.state.token, 'Content-Type': 'multipart/form-data' },
+                params: {
+                    order_id: id,
+                    admin_note: note
+                }
+            }).then(res => {
+                if (res.data.message == 'OK') {
+                    this.showOrderDetail(id)
+                }
+                this.$refs.loading.trigger(false)
+                this.showEditNote = false
+
             })
         }
     }

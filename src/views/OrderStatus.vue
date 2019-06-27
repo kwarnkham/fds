@@ -57,10 +57,6 @@
           Address To Deliver :
           <strong>{{$store.state.trackedOrder.address}}</strong>
         </v-flex>
-        <v-flex xs12>
-          Order Note :
-          <strong>{{$store.state.trackedOrder.note}}</strong>
-        </v-flex>
       </v-layout>
       <DataTable :headers="tableHeaders" :items="items"/>
     </v-flex>

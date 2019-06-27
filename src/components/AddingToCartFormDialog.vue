@@ -7,10 +7,11 @@
             Quantity
             <v-btn icon depressed color="primary" @click="updateQty('up')">{{addingMeal.quantity}}</v-btn>
           </span>
-          <v-btn depressed flat color="accent" @click="updateQty('up')">
+          <v-btn depressed flat icon color="accent" @click="updateQty('up')">
             <v-icon>add</v-icon>
           </v-btn>
           <v-btn
+            icon
             depressed
             flat
             color="error"
@@ -69,7 +70,6 @@ export default {
           "amount",
           this.addingMeal.price * this.addingMeal.quantity
         );
-        console.log(this.addingMeal);
         this.$store.dispatch("addToCart", this.addingMeal);
         this.showAddingToCartForm = false;
       });

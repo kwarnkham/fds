@@ -32,7 +32,6 @@
             rows="2"
             validate-on-blur
           ></v-textarea>
-          <v-textarea v-model="note" label="Note" clearable no-resize rows="2"></v-textarea>
         </v-form>
 
         <DataTable :headers="tableHeaders" :items="items"/>
@@ -145,7 +144,6 @@ export default {
     ],
     address: "",
     addressRules: [v => !!v || "Address is required"],
-    note: ""
   }),
   computed: {
     items() {
@@ -161,7 +159,7 @@ export default {
   },
   methods: {
     submit() {
-      this.submitOrder(this.name, this.mobile, this.address, this.note);
+      this.submitOrder(this.name, this.mobile, this.address);
     },
     validate() {
       if (this.$refs.form.validate()) {

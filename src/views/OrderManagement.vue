@@ -51,7 +51,7 @@
               icon
               class="success"
               :disabled="disableComplete(props.item.status)"
-              @click.native="cancelOrder(props.item.id)"
+              @click.native="completeOrder(props.item.id)"
             >
               <v-icon>play_for_work</v-icon>
             </v-btn>
@@ -73,8 +73,7 @@
               <p>Address: {{order.address}}</p>
               <p>Amount: {{order.amount}} MMK</p>
               <p>Status: {{order.status}}</p>
-              <p>Client Note: {{order.note}}</p>
-              <p>Admin Note: {{order.admin_note}}</p>
+              <p v-on:click="editNote(order.id, order.admin_note)">Admin Note: {{order.admin_note}}</p>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -93,6 +92,12 @@
             <template v-slot:price>
               <span>{{meal.price}} MMK</span>
             </template>
+            <template v-slot:qty>
+              <p>Quantity: {{meal.pivot.quantity}}</p>
+            </template>
+            <template v-slot:note>
+              <p>Note: {{meal.pivot.note}}</p>
+            </template>
             <v-spacer></v-spacer>
             <v-btn flat class="info" @click.native="showDetail(meal)">
               <v-icon>info</v-icon>
@@ -105,6 +110,31 @@
       <MealDetail @closeFullScreenDialog="closeMealDetail"/>
     </FullScreenDialog>
     <Loading ref="loading"/>
+    <v-dialog v-model="showEditNote" max-width="600" persistent>
+      <v-card>
+        <v-card-title class="headline">Edit Admin Note</v-card-title>
+        <v-card-text>
+          <v-textarea
+            auto-grow
+            background-color="blue lighten-5"
+            clearable
+            full-width
+            placeholder="Note"
+            v-model="adminNote"
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click="showEditNote = false">Cancel</v-btn>
+          <v-btn
+            color="green darken-1"
+            flat
+            @click="updateAdminNote(orderIdOfAdminNoteToBeUpdated, adminNote)"
+            :disabled="adminNote == null"
+          >Update</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-layout>
 </template>
 
@@ -138,7 +168,10 @@ export default {
         { text: "Cancel", value: "id", sortable: false },
         { text: "Complete", value: "id", sortable: false }
       ],
-      order: {}
+      order: {},
+      showEditNote: false,
+      adminNote: "",
+      orderIdOfAdminNoteToBeUpdated: 0
     };
   },
   computed: {
@@ -147,6 +180,11 @@ export default {
     }
   },
   methods: {
+    editNote(orderId, note) {
+      this.showEditNote = true;
+      this.adminNote = note;
+      this.orderIdOfAdminNoteToBeUpdated = orderId;
+    },
     disableConfirm(status) {
       if (status != "unconfirmed") {
         return true;
